@@ -1,20 +1,34 @@
 package br.appAdoteJa.appAdoteJa.config;
 
+import com.cloudinary.Cloudinary;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import java.util.HashMap;
+import java.util.Map;
 
-@Configuration
-public class WebConfig implements WebMvcConfigurer {
+@Configuration // 1. Diz ao Spring que esta é uma classe de configuração
+public class CloudinaryConfig {
 
-    @Value("${file.upload-dir}")
-    private String uploadBaseDir;
+    // 2. Lê os valores do seu application.properties
+    @Value("${cloudinary.cloud_name}")
+    private String cloudName;
 
-    @Override
-    public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry.addResourceHandler("/uploads/**")
-                .addResourceLocations("file:" + uploadBaseDir + "/");
+    @Value("${cloudinary.api_key}")
+    private String apiKey;
+
+    @Value("${cloudinary.api_secret}")
+    private String apiSecret;
+
+    @Bean // 3. Diz ao Spring: "Crie este objeto (um 'Bean') para eu injetar em outros lugares"
+    public Cloudinary cloudinary() {
+        Map<String, String> config = new HashMap<>();
+        config.put("cloud_name", cloudName);
+        config.put("api_key", apiKey);
+        config.put("api_secret", apiSecret);
+        config.put("secure", true); // Garante que as URLs sejam "https://"
+        
+        // 4. Retorna o objeto Cloudinary pronto, que o AnimalController vai receber via @Autowired
+        return new Cloudinary(config);
     }
 }
-	

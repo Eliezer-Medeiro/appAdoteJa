@@ -7,10 +7,9 @@ import org.springframework.context.annotation.Configuration;
 import java.util.HashMap;
 import java.util.Map;
 
-@Configuration // 1. Diz ao Spring que esta é uma classe de configuração
+@Configuration
 public class CloudinaryConfig {
 
-    // 2. Lê os valores do seu application.properties
     @Value("${cloudinary.cloud_name}")
     private String cloudName;
 
@@ -20,14 +19,23 @@ public class CloudinaryConfig {
     @Value("${cloudinary.api_secret}")
     private String apiSecret;
 
-    @Bean // 3. Diz ao Spring: "Crie este objeto (um 'Bean') para eu injetar em outros lugares"
+    /**
+     * Este método @Bean cria o objeto Cloudinary.
+     * Ele lê as chaves do application.properties e retorna um objeto
+     * que o Spring pode injetar (@Autowired) em outros lugares,
+     * como no seu AnimalController.
+     */
+    @Bean
     public Cloudinary cloudinary() {
-        Map<String, String> config = new HashMap<>();
+        // Usamos Map<String, Object> para aceitar
+        // tanto Strings (apiKey) quanto booleans (secure=true)
+        Map<String, Object> config = new HashMap<>();
+        
         config.put("cloud_name", cloudName);
         config.put("api_key", apiKey);
         config.put("api_secret", apiSecret);
-        config.put("secure", "true"); // Corrigido
-    
+        config.put("secure", true);
+        
         return new Cloudinary(config);
-    }s
+    }
 }

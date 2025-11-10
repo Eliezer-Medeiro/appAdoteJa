@@ -39,14 +39,15 @@
 
         <div class="animal-grid">
             <div th:each="animal : ${animais}" class="animal-card">
-
-                <img th:if="${!#lists.isEmpty(animal.fotos)}"
-                     th:src="${animal.fotos[0].url}" alt="Foto do Animal" class="card-image">
-
-                <img th:unless="${!#lists.isEmpty(animal.fotos)}"
-                     src="https://placehold.co/400x300/e0e0e0/777?text=Sem+Foto"
-                     alt="Sem Foto" class="card-image">
-
+        
+                <div class="card-image-wrapper"> 
+                    <img th:if="${!#lists.isEmpty(animal.fotos)}"
+                         th:src="${animal.fotos[0].url}" alt="Foto do Animal" class="card-image">
+        
+                    <img th:unless="${!#lists.isEmpty(animal.fotos)}"
+                         src="https://placehold.co/400x300/e0e0e0/777?text=Sem+Foto"
+                         alt="Sem Foto" class="card-image">
+                </div>
                 <div class="card-content">
                     <h3 th:text="${animal.nome}">Nome do Animal</h3>
                     <p class="card-details" th:text="|${animal.sexo}, ${animal.idade} anos|">Macho, 2 anos</p>
@@ -56,13 +57,13 @@
                        th:classappend="${animal.status == 'Disponível' ? ' status-disponivel' : ' status-adotado'}">
                         Disponível
                     </p>
-
+        
                     <div class="acoes-animal">
                         <a th:href="@{/animais/editar/{id}(id=${animal.id})}" class="btn-editar">Editar</a>
                         <button class="btn-adotado">Marcar como Adotado</button>
                     </div>
                 </div>
-
+        
             </div>
         </div>
     </section>

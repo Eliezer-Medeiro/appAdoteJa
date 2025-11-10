@@ -7,7 +7,7 @@ COPY appAdoteJa/pom.xml .
 RUN mvn dependency:go-offline
 
 # Copia o código fonte e compila
-COPY src appAdoteJa/src
+COPY appAdoteJa/src ./src
 RUN mvn clean package -DskipTests
 
 # Etapa 2: imagem final, mais leve

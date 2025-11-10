@@ -9,23 +9,21 @@
 }
 
 body {
-  background-color: #f7f7f7;
+  background-color: #f8f9fa;
   color: #333;
   min-height: 100vh;
-  display: flex;
-  flex-direction: column;
 }
 
 /* ======================== */
 /* NAVBAR SUPERIOR */
 /* ======================== */
 .navbar-top {
-  background-color: #fff;
-  border-bottom: 1px solid #ddd;
-  padding: 12px 30px;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  background-color: #fff;
+  padding: 12px 20px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
 }
 
 .nav-links {
@@ -40,8 +38,8 @@ body {
   transition: color 0.3s;
 }
 
-.nav-link:hover,
-.nav-link.active {
+.nav-link.active,
+.nav-link:hover {
   color: #2e8b57;
 }
 
@@ -52,11 +50,11 @@ body {
 }
 
 .btn-logout {
-  background-color: #dc3545;
-  color: #fff;
-  padding: 6px 14px;
-  border-radius: 6px;
   text-decoration: none;
+  color: #fff;
+  background-color: #dc3545;
+  padding: 6px 12px;
+  border-radius: 8px;
   transition: background 0.3s;
 }
 
@@ -68,173 +66,156 @@ body {
 /* LAYOUT PRINCIPAL */
 /* ======================== */
 .main-layout {
-  display: grid;
-  grid-template-columns: 1fr; /* Full width para "Meus Animais" */
-  gap: 20px;
-  padding: 25px 40px;
+  padding: 20px 30px;
+  display: flex;
+  justify-content: center;
 }
 
 /* ======================== */
-/* GALERIA DE ANIMAIS */
+/* CONTEÚDO PRINCIPAL */
 /* ======================== */
 .conteudo-principal {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 20px;
   width: 100%;
+  max-width: 1200px;
 }
 
 .conteudo-principal h1 {
-  font-size: 2rem;
+  font-size: 1.8rem;
   color: #2e8b57;
-  margin-bottom: 10px;
+  margin-bottom: 5px;
 }
 
 .conteudo-principal p {
   color: #666;
   margin-bottom: 20px;
-  text-align: center;
 }
 
+.alert-success, .alerta-vazio {
+  background-color: #e8f5e9;
+  color: #2e8b57;
+  padding: 10px 15px;
+  border-radius: 8px;
+  margin-bottom: 15px;
+}
+
+/* ======================== */
+/* GRID DE ANIMAIS */
+/* ======================== */
 .animal-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
   gap: 20px;
-  width: 100%;
+  justify-items: center;
 }
 
 /* ======================== */
-/* CARD DE ANIMAL */
+/* CARD DO ANIMAL */
 /* ======================== */
 .animal-card {
-  background-color: #fff;
+  position: relative;
+  width: 100px;
   border-radius: 12px;
-  box-shadow: 0 2px 12px rgba(0,0,0,0.08);
   overflow: hidden;
+  background-color: #fff;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
   display: flex;
   flex-direction: column;
-  transition: transform 0.3s, box-shadow 0.3s;
+  align-items: center;
+  transition: transform 0.3s ease;
 }
 
 .animal-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 4px 18px rgba(0,0,0,0.12);
+  transform: scale(1.05);
+}
+
+/* WRAPPER DA IMAGEM */
+.card-image-wrapper {
+  position: relative;
+  width: 100%;
+  height: 180px;
+  overflow: hidden;
 }
 
 .card-image {
   width: 100%;
-  height: 200px;
+  height: 100%;
   object-fit: cover;
-  background-color: #f3f3f3;
+  transition: transform 0.3s ease;
 }
 
+.animal-card:hover .card-image {
+  transform: scale(1.1);
+}
+
+/* DETALHES SOBREPOSTOS */
 .card-content {
-  padding: 15px;
-  display: flex;
-  flex-direction: column;
-  flex-grow: 1;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  background: rgba(46,139,87,0.85);
+  color: #fff;
+  padding: 8px;
+  text-align: center;
+  transform: translateY(100%);
+  transition: transform 0.3s ease;
+}
+
+.animal-card:hover .card-content {
+  transform: translateY(0);
 }
 
 .card-content h3 {
-  font-size: 1.2rem;
-  color: #333;
-  margin-bottom: 5px;
+  margin: 0;
+  font-size: 1rem;
 }
 
-.card-details, .card-location {
-  font-size: 0.95rem;
-  color: #666;
-  margin-bottom: 5px;
+.card-details, .card-location, .card-status {
+  font-size: 0.8rem;
+  margin: 2px 0;
 }
 
-.card-status {
-  font-size: 0.9rem;
-  font-weight: 500;
-  padding: 4px 10px;
-  border-radius: 8px;
-  text-align: center;
-  margin-bottom: 10px;
-}
-
+/* STATUS */
 .status-disponivel {
-  background-color: #e8f5e9;
-  color: #2e8b57;
+  color: #00ff7f;
+  font-weight: bold;
 }
 
 .status-adotado {
-  background-color: #fff8e1;
-  color: #ff9800;
+  color: #ff6347;
+  font-weight: bold;
 }
 
-/* Botões de ação no card */
+/* BOTÕES */
 .acoes-animal {
   display: flex;
-  gap: 10px;
+  justify-content: center;
+  gap: 5px;
+  margin-top: 8px;
 }
 
 .btn-editar, .btn-adotado {
-  flex: 1;
-  padding: 8px;
+  font-size: 0.75rem;
+  padding: 4px 8px;
   border-radius: 6px;
-  font-weight: 500;
-  cursor: pointer;
-  text-align: center;
   border: none;
-  transition: background 0.3s;
-  color: #fff;
+  cursor: pointer;
+  transition: background 0.3s ease;
 }
 
 .btn-editar {
-  background-color: #007bff;
+  background-color: #2e8b57;
+  color: #fff;
 }
 
 .btn-editar:hover {
-  background-color: #0056b3;
+  background-color: #256d46;
 }
 
 .btn-adotado {
-  background-color: #ff9800;
+  background-color: #dc3545;
+  color: #fff;
 }
 
 .btn-adotado:hover {
-  background-color: #e68900;
-}
-
-/* ======================== */
-/* ALERTAS */
-.alert-success, .alerta-vazio {
-  width: 100%;
-  padding: 15px;
-  border-radius: 12px;
-  text-align: center;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-}
-
-.alert-success {
-  background-color: #d4edda;
-  color: #155724;
-}
-
-.alerta-vazio a {
-  color: #2e8b57;
-  font-weight: 500;
-  text-decoration: underline;
-}
-
-/* ======================== */
-/* RESPONSIVIDADE */
-@media (max-width: 768px) {
-  .animal-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .main-layout {
-    padding: 15px 20px;
-  }
-
-  .navbar-top {
-    flex-direction: column;
-    gap: 10px;
-  }
+  background-color: #b52a38;
 }

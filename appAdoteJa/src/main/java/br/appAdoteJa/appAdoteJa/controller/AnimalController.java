@@ -60,7 +60,7 @@ public class AnimalController {
 		String nomeUsuario = cookieService.getCookie(request, "nomeUsuario");
 		model.addAttribute("nome", nomeUsuario != null ? nomeUsuario : "Visitante");
 		model.addAttribute("animal", animal); // Garante que o objeto animal exista
-		return "cadastro-animal";
+		return "cadastro_animal";
 	}
 	
 	@PostMapping("/cadastro-animal")
@@ -74,7 +74,7 @@ public class AnimalController {
 		// Validação do formulário
 		if (result.hasErrors()) {
 			model.addAttribute("animal", animal); // Devolve o animal para corrigir
-			return "cadastro-animal";
+			return "cadastro_animal";
 		}
 		
 		// Verifica se foi enviada pelo menos uma foto
@@ -166,7 +166,7 @@ public class AnimalController {
 			return "redirect:/login";
 		}
 		
-		return "meus-animais"; // Nome correto do template
+		return "meus_animais"; // Nome correto do template
 	}
 	
 	// Mostra os detalhes de um animal específico

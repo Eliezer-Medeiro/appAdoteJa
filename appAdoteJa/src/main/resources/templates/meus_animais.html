@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Meus Animais - Adote Já</title>
+    <link rel="stylesheet" href="/css/meus_animais_style.css"> 
+</head>
+<body>
+
+    <header>
+        <h1>Meus Animais Cadastrados</h1>
+        <a th:href="@{/}" class="btn-home">Voltar ao Catálogo</a>
+        <a th:href="@{/animais/cadastro-animal}" class="btn-cadastro">+ Doar Novo Animal</a>
+    </header>
+
+    <main class="catalogo-meus-animais">
+
+        <div th:if="${sucesso}" class="alert-success">
+            <p th:text="${sucesso}"></p>
+        </div>
+        
+        <div th:if="${#lists.isEmpty(animais)}" class="alerta-vazio">
+            <p>Você ainda não cadastrou nenhum animal para adoção.</p>
+            <p><a th:href="@{/animais/cadastro-animal}">Comece a cadastrar seu primeiro animal aqui!</a></p>
+        </div>
+
+        <div th:each="animal : ${animais}" class="cartao-animal">
+            
+            <div class="cartao-header">
+                <h2 th:text="${animal.nome}">Nome do Animal</h2>
+                <span th:text="${animal.status}" 
+                      th:class="${animal.status == 'Disponível' ? 'status-disponivel' : 'status-adotado'}">
+                      Disponível
+                </span>
+            </div>
+
+            <div class="cartao-body">
+                <img th:if="${!#lists.isEmpty(animal.fotos)}" 
+                     th:src="${animal.fotos[0].url}" 
+                     alt="Foto do Animal" 
+                     class="foto-animal">
+                <img th:unless="${!#lists.isEmpty(animal.fotos)}" 
+                     src="https://via.placeholder.com/300?text=Sem+Foto" 
+                     alt="Sem Foto" 
+                     class="foto-animal">
+
+                <div class="detalhes">
+                    <p><strong>Espécie:</strong> <span th:text="${animal.especie}">Cachorro</span></p>
+                    <p><strong>Raça:</strong> <span th:text="${animal.raca}">Vira-lata</span></p>
+                    <p><strong>Idade:</strong> <span th:text="${animal.idade}">5</span> anos</p>
+                    <p><strong>Sexo:</strong> <span th:text="${animal.sexo}">Macho</span></p>
+                </div>
+            </div>
+
+            <div class="cartao-footer">
+                <a th:href="@{/animais/editar/{id}(id=${animal.id})}" class="btn-acao editar">Editar</a>
+                <button class="btn-acao adotado">Marcar como Adotado</button>
+            </div>
+        </div>
+        
+    </main>
+
+</body>
+</html>

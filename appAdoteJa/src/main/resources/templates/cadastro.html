@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<!-- 1. Adicionar o namespace do Thymeleaf -->
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<title>Cadastro</title>
+		<meta charset="utf-8">
+		<link rel="stylesheet" th:href="@{/css/login_cadastro_style.css}">
+	</head>
+	<body>
+		<div class="register-container">
+			<h2 class="text-center mb-4">Cadastro</h2>
+			
+			<!-- 2. Adicionar th:object e th:action. O objeto 'usuario' é o que vem do Controller. -->
+			<form th:object="${usuario}" method="post" th:action="@{/cadastro}">
+				
+				<div class="form-group">
+					<label for="username">Nome de Usuário</label>
+					<!-- 3. Usar th:field para realizar o binding com o campo 'nome' do objeto Usuario -->
+					<input type="text" th:field="*{nome}" class="form-control" id="username"
+					placeholder="Digite seu nome de usuário">
+					
+					<!-- 4. Exibir mensagens de erro para o campo 'nome' -->
+					<span th:if="${#fields.hasErrors('nome')}" th:errors="*{nome}" class="error-message"></span>
+				</div>
+				
+				<div class="form-group">
+					<label for="email">E-mail</label>
+					<!-- 3. Usar th:field para realizar o binding com o campo 'email' -->
+					<input type="email" th:field="*{email}" class="form-control" id="email"
+					placeholder="Digite seu e-mail">
+					
+					<!-- 4. Exibir mensagens de erro para o campo 'email' -->
+					<span th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="error-message"></span>
+				</div>
+				
+				<div class="form-group">
+					<label for="password">Senha</label>
+					<!-- 3. Usar th:field para realizar o binding com o campo 'senha' -->
+					<!-- Importante: a senha deve ser enviada como tipo 'password' -->
+					<input type="password" th:field="*{senha}" class="form-control" id="password"
+					placeholder="Digite sua senha">
+					
+					<!-- 4. Exibir mensagens de erro para o campo 'senha' -->
+					<span th:if="${#fields.hasErrors('senha')}" th:errors="*{senha}" class="error-message"></span>
+				</div>
+				
+				<div class="form-group">
+					<label for="confrmPassword">Confirme sua senha</label>
+					<!-- Este campo geralmente não é mapeado na entidade e deve ser validado no Controller/Service -->
+					<input type="password" name="confirmaSenha" class="form-control" id="confrmPassword"
+					placeholder="Confirme sua senha">
+				</div>
+				
+				<button type="submit" class="btn btn-primary btn-block">Cadastrar</button><br>
+				<a th:href="@{/login}">Voltar ao Login</a>
+			</form>
+		</div>	
+	</body>
+</html>

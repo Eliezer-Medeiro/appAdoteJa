@@ -1,0 +1,169 @@
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    font-family: Arial, sans-serif;
+    background-color: #f7f7f7; /* Fundo claro */
+    display: flex; /* Garante que o container ocupe todo o viewport */
+    justify-content: center;
+    align-items: center;
+}
+
+
+/* Container Principal - Configura o layout de 3 colunas (Pets e Login) */
+.container {
+    display: flex;
+    justify-content: space-between; /* Espaçamento entre os elementos laterais e centrais */
+    align-items: center;
+    width: 100%;
+    max-width: 1200px; /* Limita a largura para melhor visualização em telas grandes */
+    height: 100%;
+    position: relative; 
+}
+
+/* NOVO WRAPPER: Agrupa Título e Login Box */
+.login-wrapper {
+    display: flex;
+	height: 0px;
+    flex-direction: column; /* Coloca os itens (Título e Login Box) em coluna */
+    align-items: center; /* Centraliza horizontalmente o título e a caixa de login */
+    justify-content: center;
+}
+
+/* TÍTULO PRINCIPAL PROEMINENTE (AdoteJá) */
+.titulo {
+    color: #377E57; /* Verde escuro para destaque */
+    font-size: 80px; /* Tamanho grande */
+    font-weight: 900; /* Super bold */
+    text-align: center;
+    margin-bottom: 20px; /* Espaço entre o título e a caixa de login */
+    letter-spacing: 3px; 
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+
+/* Estilização da Caixa de Login Central */
+.login-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+	width: 350px; /* Largura fixa da caixa de login */
+    padding: 20px;
+    position: relative;
+    z-index: 10;
+    background-color: #ffffff; /* Cor de fundo para a caixa de login, garantindo visibilidade */
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* Estilização do Formulário */
+.login-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px; /* Espaço entre os inputs */
+    width: 100%;
+}
+
+/* Estilização dos Campos de Input (Email e Senha) */
+.input-field {
+    width: 100%;
+    padding: 15px 20px;
+    border: none;
+    border-radius: 5px;
+    background-color: #444; /* Cor de fundo cinza escuro */
+    color: white;
+    font-size: 16px;
+    box-sizing: border-box; /* Inclui padding na largura total */
+}
+
+/* Placeholder (o texto dentro do input) */
+.input-field::placeholder {
+    color: #ccc; 
+    font-weight: bold;
+}
+
+/* Botão de Login */
+.login-button {
+    padding: 10px 20px;
+    background-color: #8cbf97; /* Cor verde-médio do botão */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 18px;
+    font-weight: bold;
+    transition: background-color 0.2s;
+}
+
+.login-button:hover {
+    background-color: #7ab385; /* Escurece um pouco no hover */
+}
+
+/* ======================================================= */
+/* ESTILIZAÇÃO DAS IMAGENS DOS PETS (Cachorro e Gato) */
+/* ======================================================= */
+
+/* Contêiner Geral (pet-image) */
+.pet-image {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.pet-imageCat{
+	width: 350px; 
+	height: 450px; 
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	overflow: hidden; 
+}
+
+
+/* Contêineres Específicos: Define o mesmo tamanho para ambos */
+.pet-imageDog{
+    /* Define um tamanho fixo para as imagens, garantindo que sejam iguais */
+    width: 350px; 
+    height: 350px; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden; 
+}
+
+/* Imagens: Força a imagem a preencher o contêiner e manter proporção */
+.pet-imageDog img, 
+.pet-imageCat img {
+    width: 100%; /* Ocupa a largura total do contêiner (350px) */
+    height: 100%; /* Ocupa a altura total do contêiner (350px) */
+    object-fit: contain; /* Garante que a imagem inteira seja visível, mantendo sua proporção original */
+    transition: transform 0.3s;
+}
+
+.pet-imageDog img:hover, 
+.pet-imageCat img:hover {
+    transform: scale(1.05);
+}
+
+/* Alertas */
+.alert {
+    padding: 10px;
+    border-radius: 4px;
+    margin-top: 10px;
+    font-size: 0.9em;
+    font-weight: bold;
+    text-align: center;
+}
+
+.alert-danger {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+}
+
+.alert-success {
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+}

@@ -1,0 +1,170 @@
+/* ==== 1. BASE E REAJUSTES GERAIS ==== */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f9;
+    color: #333;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* ==== 2. HEADER E BOTÕES DE NAVEGAÇÃO ==== */
+header {
+    background-color: #ffffff;
+    padding: 15px 5%;
+    border-bottom: 2px solid #ddd;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+header h1 {
+    color: #007bff; /* Cor principal da aplicação */
+    margin: 0;
+}
+
+.btn-home, .btn-cadastro {
+    text-decoration: none;
+    padding: 8px 15px;
+    border-radius: 5px;
+    font-weight: bold;
+    transition: background-color 0.3s;
+}
+
+.btn-home {
+    background-color: #6c757d; /* Cinza */
+    color: white;
+}
+
+.btn-cadastro {
+    background-color: #28a745; /* Verde */
+    color: white;
+    margin-left: 10px;
+}
+
+.btn-home:hover, .btn-cadastro:hover {
+    opacity: 0.9;
+}
+
+
+/* ==== 3. LAYOUT DO CATÁLOGO E CARDS ==== */
+.catalogo-meus-animais {
+    display: grid;
+    /* 3 colunas, flexível */
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); 
+    gap: 30px;
+    padding: 30px 5%;
+}
+
+.cartao-animal {
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    transition: transform 0.2s;
+}
+
+.cartao-animal:hover {
+    transform: translateY(-5px);
+}
+
+.foto-animal {
+    width: 100%;
+    height: 200px;
+    object-fit: cover; /* Garante que a imagem cubra o espaço sem distorcer */
+}
+
+.cartao-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    border-bottom: 1px solid #eee;
+}
+
+.cartao-header h2 {
+    margin: 0;
+    font-size: 1.4em;
+    color: #007bff;
+}
+
+.cartao-body {
+    padding: 15px;
+}
+
+.detalhes p {
+    margin: 5px 0;
+    font-size: 0.95em;
+}
+
+/* ==== 4. STATUS E ALERTS ==== */
+.status-disponivel {
+    background-color: #28a745; /* Verde */
+    color: white;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 0.8em;
+    font-weight: bold;
+}
+
+.status-adotado {
+    background-color: #ffc107; /* Amarelo */
+    color: #333;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 0.8em;
+    font-weight: bold;
+}
+
+.alerta-vazio, .alert-success {
+    grid-column: 1 / -1; /* Ocupa todas as colunas */
+    padding: 20px;
+    border-radius: 5px;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.alert-success {
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+}
+
+
+/* ==== 5. FOOTER E AÇÕES ==== */
+.cartao-footer {
+    padding: 15px;
+    border-top: 1px solid #eee;
+    display: flex;
+    gap: 10px;
+}
+
+.btn-acao {
+    text-decoration: none;
+    padding: 8px 12px;
+    border-radius: 4px;
+    font-size: 0.9em;
+    cursor: pointer;
+    border: none;
+    transition: background-color 0.3s;
+}
+
+.btn-acao.editar {
+    background-color: #007bff;
+    color: white;
+}
+
+.btn-acao.adotado {
+    background-color: #ff9800;
+    color: white;
+}
+
+.btn-acao.editar:hover {
+    background-color: #0056b3;
+}

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Adote Já - Login</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+    <div th:if="${mensagem_sucesso}" class="alert alert-success" role="alert">
+        <p th:text="${mensagem_sucesso}"></p>
+    </div>
+	
+    <div class="container">
+		
+        <div class="pet-imageDog">
+            <img th:src="@{/images/dog.png}" alt="Cachorro">
+        </div>
+        
+        <div class="login-wrapper"> 
+            <h1 class="titulo">AdoteJá</h1>
+            <div class="login-box">
+                <form th:object="${usuario}" method="POST" th:action="@{/logar}" class="login-form">
+                    
+                    <input type="email" th:field="*{email}" placeholder="Email" required class="input-field">
+                    <input type="password" th:field="*{senha}" placeholder="Senha" required class="input-field">
+                    
+                    <button type="submit" class="login-button">Login</button>
+                    
+                    <a th:href="@{/cadastro}">Cadastro</a>
+                    
+                    <div th:if="${erro != null}" th:text="${erro}" class="alert alert-danger" role="alert"></div>
+                </form>
+            </div>
+        </div>
+        
+        <div class="pet-imageCat">
+            <img th:src="@{/images/cat.png}" alt="Gato">
+        </div>
+    </div>
+</body>
+</html>

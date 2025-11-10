@@ -1,0 +1,238 @@
+/* ==== 1. BASE GERAL ==== */
+
+body {
+
+font-family: Arial, sans-serif;
+
+background-color: #f4f4f9; /* Fundo leve para destaque do formulário */
+
+color: #333;
+
+margin: 0;
+
+padding: 0;
+
+display: flex;
+
+justify-content: center;
+
+align-items: center;
+
+min-height: 100vh;
+
+}
+
+
+
+/* ==== 2. CONTAINER DO FORMULÁRIO ==== */
+
+
+.register-container {
+
+max-width: 400px;
+
+width: 100%;
+
+margin: 30px auto;
+
+padding: 40px;
+
+background-color: #ffffff;
+
+border-radius: 10px;
+
+box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+
+}
+
+
+
+.text-center {
+
+text-align: center;
+
+}
+
+
+
+.mb-4 {
+
+margin-bottom: 1.5rem;
+
+color: #007bff; /* Cor primária */
+
+}
+
+
+
+/* ==== 3. CAMPOS DE INPUT ==== */
+
+.form-group {
+
+margin-bottom: 1rem;
+
+}
+
+
+
+label {
+
+display: block;
+
+margin-bottom: .4rem;
+
+font-weight: 600;
+
+color: #495057;
+
+}
+
+
+
+.form-control {
+
+width: 100%;
+
+padding: 10px;
+
+border: 1px solid #ced4da;
+
+border-radius: 5px;
+
+box-sizing: border-box; /* Inclui padding e borda na largura total */
+
+transition: border-color 0.3s;
+
+}
+
+
+
+.form-control:focus {
+
+border-color: #007bff;
+
+outline: none;
+
+}
+
+
+
+/* ==== 4. BOTÕES E LINKS ==== */
+
+.btn {
+
+padding: 12px 15px;
+
+border-radius: 5px;
+
+cursor: pointer;
+
+font-size: 1.05em;
+
+font-weight: bold;
+
+transition: background-color 0.3s;
+
+}
+
+
+
+.btn-primary {
+
+background-color: #007bff;
+
+color: white;
+
+border: none;
+
+}
+
+
+
+.btn-primary:hover {
+
+background-color: #0056b3;
+
+}
+
+
+
+.btn-block {
+
+width: 100%;
+
+display: block;
+
+margin-top: 1.5rem;
+
+}
+
+
+
+/* Link "Voltar" */
+
+a {
+
+display: block;
+
+text-align: center;
+
+margin-top: 1rem;
+
+color: #6c757d;
+
+text-decoration: none;
+
+}
+
+
+
+a:hover {
+
+color: #007bff;
+
+text-decoration: underline;
+
+}
+
+
+
+/* ==== 5. MENSAGENS DE ERRO/SUCESSO ==== */
+
+.alert-danger, .alert-success {
+
+padding: 15px;
+
+margin-bottom: 15px;
+
+border-radius: 5px;
+
+font-weight: 500;
+
+}
+
+
+
+.alert-danger {
+
+background-color: #f8d7da;
+
+color: #721c24;
+
+border: 1px solid #f5c6cb;
+
+}
+
+
+
+.error-message {
+
+color: #dc3545;
+
+font-size: 0.85em;
+
+display: block;
+
+margin-top: 3px;
+
+}

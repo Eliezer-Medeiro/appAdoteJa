@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Doar Animal - Adote Já</title>
+    <link rel="stylesheet" th:href="@{/css/cadastro_animal_style.css}"> 
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <h1>Cadastrar Animal para Adoção</h1>
+            <a th:href="@{/}" class="btn-cancel">Voltar ao Catálogo</a>
+        </header>
+
+        <div th:if="${sucesso}" class="alert-success">
+            <p th:text="${sucesso}"></p>
+        </div>
+        <div th:if="${erro}" class="alert-danger">
+            <p th:text="${erro}"></p>
+        </div>
+
+        <form th:action="@{/animais/cadastro-animal}" th:object="${animal}" method="post" enctype="multipart/form-data" class="form-cadastro">
+            
+            <fieldset>
+                <legend>Informações Principais</legend>
+
+                <div class="form-group">
+                    <label for="nome">Nome do Animal:</label>
+                    <input type="text" id="nome" th:field="*{nome}" required>
+                    <span th:if="${#fields.hasErrors('nome')}" th:errors="*{nome}" class="error-message"></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="especie">Espécie:</label>
+                    <select id="especie" th:field="*{especie}" required>
+                        <option value="">Selecione</option>
+                        <option value="Cachorro">Cachorro</option>
+                        <option value="Gato">Gato</option>
+                        <option value="Outro">Outro</option>
+                    </select>
+                    <span th:if="${#fields.hasErrors('especie')}" th:errors="*{especie}" class="error-message"></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="raca">Raça:</label>
+                    <input type="text" id="raca" th:field="*{raca}" required>
+                    <span th:if="${#fields.hasErrors('raca')}" th:errors="*{raca}" class="error-message"></span>
+                </div>
+            </fieldset>
+
+            <fieldset>
+                <legend>Detalhes e Descrição</legend>
+
+                <div class="form-group">
+                    <label for="sexo">Sexo:</label>
+                    <select id="sexo" th:field="*{sexo}" required>
+                        <option value="">Selecione</option>
+                        <option value="Macho">Macho</option>
+                        <option value="Femea">Fêmea</option>
+                    </select>
+                    <span th:if="${#fields.hasErrors('sexo')}" th:errors="*{sexo}" class="error-message"></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="idade">Idade (em anos):</label>
+                    <input type="number" id="idade" th:field="*{idade}" min="0" required>
+                    <span th:if="${#fields.hasErrors('idade')}" th:errors="*{idade}" class="error-message"></span>
+                </div>
+
+                <div class="form-group full-width">
+                    <label for="descricao">Descrição e Histórico:</label>
+                    <textarea id="descricao" th:field="*{descricao}" required></textarea>
+                    <span th:if="${#fields.hasErrors('descricao')}" th:errors="*{descricao}" class="error-message"></span>
+                </div>
+                
+                </fieldset>
+				
+				<fieldset>
+				    <legend>Fotos do Animal</legend>
+				        
+					<div class="form-group full-width">
+				    	<label for="fotosUpload">Selecione até 5 Fotos:</label>
+				    	<input type="file" id="fotosUpload" name="fotosUpload" accept="image/*" multiple required>
+				    </div>
+				        
+				</fieldset>
+
+            <button type="submit" class="btn-submit">Cadastrar Animal</button>
+            
+        </form>
+    </div>
+
+</body>
+</html>

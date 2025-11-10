@@ -102,10 +102,15 @@ body {
 /* GRID DE ANIMAIS */
 /* ======================== */
 .animal-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-  gap: 20px;
-  justify-items: center;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 20px;
+  justify-items: center;
+
+  justify-content: center;
+  background-color: #2e8b57;
+  padding: 20px;
+  border-radius: 12px;
 }
 
 /* ======================== */

@@ -1,134 +1,138 @@
 <!DOCTYPE html>
 <html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Adote Já - Catálogo</title>
-    <link rel="stylesheet" th:href="@{/css/home_style.css}">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Adote Já - Catálogo</title>
+  <link rel="stylesheet" th:href="@{/css/home_style.css}">
 </head>
 <body>
 
-    <!-- Barra Superior -->
-    <header class="navbar-top">
-        <div class="container">
-            <nav class="nav-links">
-                <a th:href="@{/}" class="nav-link active">Home</a>
-                <a th:href="@{/animais/cadastro-animal}" class="nav-link">Doar</a>
-                <a th:href="@{/animais/meus-animais}" class="nav-link">Meus Animais</a>
-            </nav>
-            <div class="user-profile">
-                <span th:text="${nome}">Usuário Logado</span>
-                <a th:href="@{/sair}" class="btn-logout">Sair</a>
-            </div>
+  <!-- ======================== -->
+  <!-- NAVBAR SUPERIOR -->
+  <!-- ======================== -->
+  <header class="navbar-top">
+    <div class="container">
+      <nav class="nav-links">
+        <a th:href="@{/}" class="nav-link active">Home</a>
+        <a th:href="@{/animais/cadastro-animal}" class="nav-link">Doar</a>
+        <a th:href="@{/animais/meus-animais}" class="nav-link">Meus Animais</a>
+      </nav>
+      <div class="user-profile">
+        <span th:text="${nome}">Usuário Logado</span>
+        <a th:href="@{/sair}" class="btn-logout">Sair</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- ======================== -->
+  <!-- CONTEÚDO PRINCIPAL -->
+  <!-- ======================== -->
+  <main class="main-layout">
+
+    <!-- FILTROS LATERAIS -->
+    <aside class="sidebar-filtros">
+      <h2>Filtrar Animais</h2>
+
+      <div class="filtro">
+        <label for="especie">Espécie</label>
+        <select id="especie" name="especie">
+          <option value="">Todas</option>
+          <option value="cachorro">Cachorro</option>
+          <option value="gato">Gato</option>
+          <option value="ave">Ave</option>
+        </select>
+      </div>
+
+      <div class="filtro">
+        <label for="raca">Raça</label>
+        <input type="text" id="raca" placeholder="Digite a raça">
+      </div>
+
+      <div class="filtro">
+        <label for="genero">Gênero</label>
+        <select id="genero">
+          <option value="">Todos</option>
+          <option value="macho">Macho</option>
+          <option value="femea">Fêmea</option>
+        </select>
+      </div>
+
+      <div class="filtro">
+        <label for="idade">Idade</label>
+        <select id="idade">
+          <option value="">Todas</option>
+          <option value="filhote">Filhote</option>
+          <option value="adulto">Adulto</option>
+          <option value="idoso">Idoso</option>
+        </select>
+      </div>
+
+      <div class="filtro">
+        <label for="porte">Porte</label>
+        <select id="porte">
+          <option value="">Todos</option>
+          <option value="pequeno">Pequeno</option>
+          <option value="medio">Médio</option>
+          <option value="grande">Grande</option>
+        </select>
+      </div>
+    </aside>
+
+    <!-- GALERIA DE ANIMAIS -->
+    <section class="conteudo-principal">
+      <h1>Encontre seu novo amigo</h1>
+      <p>Animais disponíveis para adoção perto de você.</p>
+
+      <div th:if="${#lists.isEmpty(animais)}" class="alerta-vazio">
+        <p>Nenhum animal disponível no momento. 😥</p>
+      </div>
+
+      <div class="animal-grid">
+        <div th:each="animal : ${animais}" class="animal-card">
+          <img th:if="${!#lists.isEmpty(animal.fotos)}"
+               th:src="${animal.fotos[0].url}"
+               alt="Foto do Animal" class="card-image">
+          <img th:unless="${!#lists.isEmpty(animal.fotos)}"
+               src="https://placehold.co/400x300/e0e0e0/777?text=Sem+Foto"
+               alt="Sem Foto" class="card-image">
+
+          <div class="card-content">
+            <h3 th:text="${animal.nome}">Nome do Animal</h3>
+            <p class="card-details" th:text="|${animal.sexo}, ${animal.idade} anos|">Macho, 2 anos</p>
+            <p class="card-location" th:text="${animal.raca}">Raça</p>
+            <a th:href="@{/animais/detalhes/{id}(id=${animal.id})}" class="btn-adotar">Quero Adotar!</a>
+          </div>
         </div>
-    </header>
+      </div>
+    </section>
 
-    <!-- Conteúdo principal -->
-    <main class="main-layout">
+    <!-- BATE-PAPO -->
+    <aside class="chat-box">
+      <h2>Bate-Papo</h2>
+      <div class="chat-list">
+        <div class="chat-user" th:each="usuario : ${usuarios}">
+          <span class="user-avatar">🐾</span>
+          <span class="user-name" th:text="${usuario.nome}">Nome</span>
+        </div>
+      </div>
 
-        <!-- FILTROS LATERAIS -->
-        <aside class="sidebar-filtros">
-            <h2>Filtrar</h2>
+      <div class="chat-window">
+        <div class="chat-header">
+          <span class="chat-user-name">Fulano</span>
+        </div>
+        <div class="chat-messages">
+          <div class="msg received">Oi! Tudo bem?</div>
+          <div class="msg sent">Tudo sim, e você?</div>
+        </div>
+        <div class="chat-input">
+          <input type="text" placeholder="Digite uma mensagem...">
+          <button>Enviar</button>
+        </div>
+      </div>
+    </aside>
 
-            <div class="filtro">
-                <label for="especie">Espécie</label>
-                <select id="especie" name="especie">
-                    <option value="">Todas</option>
-                    <option value="cachorro">Cachorro</option>
-                    <option value="gato">Gato</option>
-                    <option value="ave">Ave</option>
-                </select>
-            </div>
+  </main>
 
-            <div class="filtro">
-                <label for="raca">Raça</label>
-                <input type="text" id="raca" placeholder="Digite a raça">
-            </div>
-			
-			<div class="filtro">
-				<label for="genero">Gênero</label>
-				<select id="genero" name="especie">
-				    <option value="">Todas</option>
-				    <option value="cachorro">Macho</option>
-				    <option value="gato">Fêmea</option>
-				</select>
-
-			</div>
-			
-            <div class="filtro">
-                <label for="idade">Idade</label>
-                <select id="idade">
-                    <option value="">Todas</option>
-                    <option value="filhote">Filhote</option>
-                    <option value="adulto">Adulto</option>
-                    <option value="idoso">Idoso</option>
-                </select>
-            </div>
-
-            <div class="filtro">
-                <label for="porte">Porte</label>
-                <select id="porte">
-                    <option value="">Todos</option>
-                    <option value="pequeno">Pequeno</option>
-                    <option value="medio">Médio</option>
-                    <option value="grande">Grande</option>
-                </select>
-            </div>
-        </aside>
-
-        <!-- GALERIA DE ANIMAIS -->
-        <section class="conteudo-principal">
-            <h1>Encontre seu novo amigo</h1>
-            <p>Animais disponíveis para adoção perto de você.</p>
-
-            <div th:if="${#lists.isEmpty(animais)}" class="alerta-vazio">
-                <p>Nenhum animal disponível no momento. 😥</p>
-            </div>
-
-            <div class="animal-grid">
-                <div th:each="animal : ${animais}" class="animal-card">
-                    <img th:if="${!#lists.isEmpty(animal.fotos)}"
-                         th:src="${animal.fotos[0].url}"
-                         alt="Foto do Animal" class="card-image">
-                    <img th:unless="${!#lists.isEmpty(animal.fotos)}"
-                         src="https://placehold.co/400x300/e0e0e0/777?text=Sem+Foto"
-                         alt="Sem Foto" class="card-image">
-
-                    <div class="card-content">
-                        <h3 th:text="${animal.nome}">Nome do Animal</h3>
-                        <p class="card-details" th:text="|${animal.sexo}, ${animal.idade} anos|">Macho, 2 anos</p>
-                        <p class="card-location" th:text="${animal.raca}">Raça</p>
-                        <a th:href="@{/animais/detalhes/{id}(id=${animal.id})}" class="btn-adotar">Quero Adotar!</a>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- BATE-PAPO -->
-        <aside class="chat-box">
-            <h2>Bate-Papo</h2>
-            <div class="chat-list">
-                <div class="chat-user" th:each="usuario : ${usuarios}">
-                    <span class="user-avatar">🐾</span>
-                    <span class="user-name" th:text="${usuario.nome}">Nome</span>
-                </div>
-            </div>
-
-            <div class="chat-window">
-                <div class="chat-header">
-                    <span class="chat-user-name">Fulano</span>
-                </div>
-                <div class="chat-messages">
-                    <div class="msg received">Oi! Tudo bem?</div>
-                    <div class="msg sent">Tudo sim, e você?</div>
-                </div>
-                <div class="chat-input">
-                    <input type="text" placeholder="Digite uma mensagem...">
-                    <button>Enviar</button>
-                </div>
-            </div>
-        </aside>
-
-    </main>
 </body>
 </html>

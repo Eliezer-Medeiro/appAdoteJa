@@ -1,5 +1,5 @@
 /* ======================== */
-/* 1. ESTILO GERAL (Baseado na Home) */
+/* ESTILO GERAL - Meus Animais (Baseado na Home) */
 /* ======================== */
 * {
   margin: 0;
@@ -15,18 +15,17 @@ body {
   display: flex;
   flex-direction: column;
   
-  /* Mantendo o fundo da sua home */
-  background-image: url('../images/grama.png'); 
-  background-size: cover; 
-  background-position: center center; 
-  background-attachment: fixed; 
-  background-color: #f7f7f7; 
+  background-image: url('../images/grama.png');
+  background-size: cover;
+  background-position: center center;
+  background-attachment: fixed;
+  background-color: #f7f7f7;
 }
 
 /* ======================== */
-/* 2. HEADER (Adaptado da Home) */
+/* NAVBAR SUPERIOR */
 /* ======================== */
-header {
+.navbar-top {
   background-color: #ffffff;
   border-bottom: 1px solid #ddd;
   padding: 15px 40px;
@@ -35,127 +34,86 @@ header {
   align-items: center;
 }
 
-header h1 {
-  color: #2e8b57; /* Cor verde da home */
-  font-size: 1.8rem;
-  margin: 0;
-}
-
-.btn-home, .btn-cadastro {
-  text-decoration: none;
-  padding: 8px 16px;
-  border-radius: 8px;
-  font-weight: 500;
-  transition: background-color 0.3s;
-  color: white;
-}
-
-.btn-home {
-  background-color: #6c757d; /* Cinza */
-}
-
-.btn-cadastro {
-  background-color: #2e8b57; /* Verde da home */
-  margin-left: 10px;
-}
-
-.btn-home:hover, .btn-cadastro:hover {
-  opacity: 0.9;
-}
-
-
-/* ======================== */
-/* 3. LAYOUT DO CATÁLOGO (Adaptado da Home) */
-/* ======================== */
-.catalogo-meus-animais {
-  display: grid;
-  /* Grid igual ao da home */
-  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+.nav-links {
+  display: flex;
   gap: 25px;
-  width: 100%;
-  padding: 30px 40px; /* Alinhado com header */
+}
+
+.nav-link {
+  text-decoration: none;
+  color: #444;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+.nav-link:hover,
+.nav-link.active {
+  color: #2e8b57;
+}
+
+.user-profile {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.btn-logout {
+  text-decoration: none;
+  color: #fff;
+  background-color: #dc3545;
+  padding: 6px 14px;
+  border-radius: 8px;
+  transition: background 0.3s;
+}
+
+.btn-logout:hover {
+  background-color: #b52a38;
 }
 
 /* ======================== */
-/* 4. CARD DE ANIMAL (Adaptado da Home) */
+/* LAYOUT PRINCIPAL */
 /* ======================== */
-.cartao-animal {
-  background-color: #fff;
-  border-radius: 16px; /* Bordas arredondadas da home */
-  overflow: hidden;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+.main-layout {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  padding: 20px 30px;
+}
+
+/* ======================== */
+/* CONTEÚDO PRINCIPAL */
+/* ======================== */
+.conteudo-principal {
+  width: 100%;
+  max-width: 1200px;
   display: flex;
   flex-direction: column;
-  transition: transform 0.25s ease;
-}
-
-.cartao-animal:hover {
-  transform: translateY(-5px);
-}
-
-.foto-animal {
-  width: 100%;
-  height: 230px;
-  object-fit: cover; /* Mudei para 'cover' para preencher melhor, como na home */
-  background-color: #f3f3f3;
-}
-
-.cartao-header {
-  display: flex;
-  justify-content: space-between;
   align-items: center;
-  padding: 15px;
-  border-bottom: 1px solid #eee;
 }
 
-.cartao-header h2 {
-  margin: 0;
-  font-size: 1.2rem; /* Fonte da home */
-  color: #333;
+.conteudo-principal h1 {
+  font-size: 1.8rem;
+  color: #2e8b57;
 }
 
-.cartao-body {
-  padding: 15px;
-}
-
-.detalhes p {
-  margin: 5px 0;
-  font-size: 0.9rem; /* Fonte da home */
+.conteudo-principal p {
   color: #666;
-}
-.detalhes p strong {
-    color: #333;
+  margin-bottom: 25px;
+  text-align: center;
 }
 
 /* ======================== */
-/* 5. STATUS E ALERTS (Adaptado da Home) */
+/* ALERTAS */
 /* ======================== */
-.status-disponivel {
-  background-color: #2e8b57; /* Verde da home */
-  color: white;
-  padding: 4px 10px;
-  border-radius: 8px;
-  font-size: 0.8em;
-  font-weight: 500;
-}
-
-.status-adotado {
-  background-color: #ffc107; /* Amarelo */
-  color: #333;
-  padding: 4px 10px;
-  border-radius: 8px;
-  font-size: 0.8em;
-  font-weight: 500;
-}
-
-.alerta-vazio, .alert-success {
-  grid-column: 1 / -1; /* Ocupa todas as colunas */
+.alerta-vazio,
+.alert-success {
+  background-color: #fff;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
   padding: 20px;
   border-radius: 16px;
   text-align: center;
-  margin-bottom: 20px;
-  background-color: #fff;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  width: 100%;
+  margin-bottom: 25px;
 }
 
 .alert-success {
@@ -164,28 +122,104 @@ header h1 {
 }
 
 .alerta-vazio p {
-    color: #666;
-    font-size: 1.1rem;
+  color: #666;
+  font-size: 1.1rem;
 }
+
 .alerta-vazio a {
-    color: #2e8b57;
-    font-weight: 500;
+  color: #2e8b57;
+  font-weight: 500;
 }
 
+/* ======================== */
+/* GRID DE ANIMAIS */
+/* ======================== */
+.animal-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 25px;
+  width: 100%;
+}
 
 /* ======================== */
-/* 6. FOOTER E AÇÕES (Adaptado da Home) */
+/* CARD DE ANIMAL */
 /* ======================== */
-.cartao-footer {
-  padding: 15px;
-  border-top: 1px solid #eee;
+.animal-card {
+  background-color: #fff;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
   display: flex;
-  gap: 10px;
-  /* Empurra os botões para baixo */
-  margin-top: auto; 
+  flex-direction: column;
+  align-items: center;
+  transition: transform 0.25s ease;
+  text-align: center;
 }
 
-.btn-acao {
+.animal-card:hover {
+  transform: translateY(-5px);
+}
+
+.card-image {
+  width: 100%;
+  height: 230px;
+  object-fit: contain;
+  background-color: #f3f3f3;
+}
+
+.card-content {
+  padding: 15px;
+  width: 100%;
+}
+
+.card-content h3 {
+  font-size: 1.1rem;
+  margin-bottom: 5px;
+  color: #333;
+}
+
+.card-details {
+  color: #666;
+  font-size: 0.9rem;
+  margin-bottom: 5px;
+}
+
+.card-location {
+  font-size: 0.9rem;
+  color: #777;
+  margin-bottom: 8px;
+}
+
+.card-status {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 8px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  margin-bottom: 10px;
+}
+
+.status-disponivel {
+  background-color: #2e8b57;
+  color: #fff;
+}
+
+.status-adotado {
+  background-color: #ffc107;
+  color: #333;
+}
+
+/* ======================== */
+/* BOTÕES DE AÇÃO */
+/* ======================== */
+.acoes-animal {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+.btn-editar,
+.btn-adotado {
   text-decoration: none;
   padding: 8px 14px;
   border-radius: 8px;
@@ -195,20 +229,32 @@ header h1 {
   border: none;
   transition: background-color 0.3s;
   color: white;
-  text-align: center;
-  flex-grow: 1; /* Faz os botões ocuparem espaço igual */
 }
 
-.btn-acao.editar {
-  background-color: #007bff; /* Azul (pode mudar se quiser) */
+.btn-editar {
+  background-color: #007bff;
 }
-.btn-acao.editar:hover {
+
+.btn-editar:hover {
   background-color: #0056b3;
 }
 
-.btn-acao.adotado {
-  background-color: #ff9800; /* Laranja (pode mudar se quiser) */
+.btn-adotado {
+  background-color: #ff9800;
 }
-.btn-acao.adotado:hover {
+
+.btn-adotado:hover {
   background-color: #e68900;
+}
+
+/* ======================== */
+/* RESPONSIVIDADE */
+/* ======================== */
+@media (max-width: 768px) {
+  .conteudo-principal h1 {
+    font-size: 1.5rem;
+  }
+  .animal-grid {
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  }
 }

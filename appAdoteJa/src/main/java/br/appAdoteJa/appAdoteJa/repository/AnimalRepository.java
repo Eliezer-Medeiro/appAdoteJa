@@ -3,16 +3,19 @@ package br.appAdoteJa.appAdoteJa.repository;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query; // Importar @Query
+import org.springframework.data.repository.query.Param; // Importar @Param
+
 import br.appAdoteJa.appAdoteJa.model.Animal;
 
 public interface AnimalRepository extends JpaRepository<Animal, Long> {
-    
-    //Encontra todos os animais pelo status
-    List<Animal> findByStatus(String status);
+	
+	//Encontra todos os animais pelo status
+	List<Animal> findByStatus(String status);
 
-    //Encontra animais pelo Status E cujo ID do Dono seja DIFERENTE
-    List<Animal> findByStatusAndDonoIdNot(String status, Long donoId);
+	//Encontra animais pelo Status E cujo ID do Dono seja DIFERENTE (para a Home)
+	List<Animal> findByStatusAndDonoIdNot(String status, Long donoId);
 
-    //Encontra animais pelo ID do Dono
-    List<Animal> findByDonoId(Long donoId);
+	@Query("SELECT DISTINCT a FROM Animal a LEFT JOIN FETCH a.fotos WHERE a.dono.id = :donoId")
+	List<Animal> findByDonoId(@Param("donoId") Long donoId);
 }

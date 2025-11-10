@@ -3,6 +3,7 @@ package br.appAdoteJa.appAdoteJa.repository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
+import java.util.Optional;
 
 import br.appAdoteJa.appAdoteJa.model.Usuario;
 

@@ -2,6 +2,7 @@ package br.appAdoteJa.appAdoteJa.controller;
 
 import java.io.UnsupportedEncodingException;
 import java.util.List;
+import java.util.Optional; // ADICIONE ESTE IMPORT
 
 import br.appAdoteJa.appAdoteJa.model.Animal;
 import br.appAdoteJa.appAdoteJa.model.Usuario;
@@ -111,12 +112,24 @@ public class LoginController {
 	@PostMapping("/cadastro")
 	public String cadastroUsuario(@Valid Usuario usuario, BindingResult result, Model model, RedirectAttributes attributes) {
 
+        // --- INÍCIO DA VERIFICAÇÃO ---
+        // 1. Verifica se o email já existe no banco
+        Optional<Usuario> usuarioExistente = ur.findByEmail(usuario.getEmail());
+        
+        if (usuarioExistente.isPresent()) {
+            // 2. Se existir, adiciona um erro ao 'model' e retorna para a página de cadastro
+            model.addAttribute("usuario", usuario); // Devolve o objeto para preencher os campos
+            model.addAttribute("erro_email", "Este e-mail já está em uso."); // Mensagem de erro
+            return "cadastro"; // Não redireciona, apenas renderiza a página de cadastro novamente
+        }
+        // --- FIM DA VERIFICAÇÃO ---
+
 		if(result.hasErrors()) {
             model.addAttribute("usuario", usuario);
 			return "cadastro";
 		}
         
-
+        // 3. Se o email não existe e não há erros de validação, salva o novo usuário
 		ur.save(usuario);
 
         

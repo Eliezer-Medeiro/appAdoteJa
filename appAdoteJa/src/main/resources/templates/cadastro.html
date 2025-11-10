@@ -29,8 +29,7 @@
 					<input type="email" th:field="*{email}" class="form-control" id="email"
 					placeholder="Digite seu e-mail">
 					
-					<!-- 4. Exibir mensagens de erro para o campo 'email' -->
-					<span th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="error-message"></span>
+					<span th:if="${erro_email}" th.text="${erro_email}" style="color: red;"></span>
 				</div>
 				
 				<div class="form-group">

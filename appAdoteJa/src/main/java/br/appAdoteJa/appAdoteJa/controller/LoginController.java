@@ -2,7 +2,7 @@ package br.appAdoteJa.appAdoteJa.controller;
 
 import java.io.UnsupportedEncodingException;
 import java.util.List;
-import java.util.Optional; // ADICIONE ESTE IMPORT
+import java.util.Optional;
 
 import br.appAdoteJa.appAdoteJa.model.Animal;
 import br.appAdoteJa.appAdoteJa.model.Usuario;

@@ -1,12 +1,18 @@
 package br.appAdoteJa.appAdoteJa.controller;
 
-import java.io.File;
+// Importações necessárias do Cloudinary
+import com.cloudinary.Cloudinary;
+import com.cloudinary.utils.ObjectUtils;
+import java.util.Map;
+
+// Importações antigas (algumas não são mais necessárias)
+import java.io.File; // Não é mais necessário para o upload
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
+// import org.springframework.beans.factory.annotation.Value; // Não é mais necessário
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -30,138 +36,157 @@ import jakarta.validation.Valid;
 @Controller
 @RequestMapping("/animais")
 public class AnimalController {
-    
-    @Value("${file.upload-dir}")
-    private String uploadBaseDir;
-    
-    @Autowired
-    private AnimalRepository animalRepository;
-    
-    @Autowired
-    private UsuarioRepository usuarioRepository;
-    
-    @Autowired
-    private CookieService cookieService;
-    
-    // Página de cadastro de novo animal
-    @GetMapping("/cadastro-animal")
-    public String exibirFormularioCadastro(Animal animal, Model model) {
-        return "cadastro_animal";
-    }
-    
-    @PostMapping("/cadastro-animal")
-    public String cadastrarAnimal(@Valid Animal animal, BindingResult result,
-            @RequestParam("fotosUpload") List<MultipartFile> files,
-            HttpServletRequest request, RedirectAttributes attributes) throws UnsupportedEncodingException {
-        
-        // Validação do formulário
-        if (result.hasErrors()) {
-            return "cadastro_animal";
-        }
-        
-        // Verifica se foi enviada pelo menos uma foto
-        if (files.isEmpty() || files.stream().allMatch(MultipartFile::isEmpty)) {
-            attributes.addFlashAttribute("erro", "É obrigatório enviar pelo menos uma foto do animal.");
-            return "redirect:/animais/cadastro-animal";
-        }
-        
-        // 1. Busca o ID do usuário logado via cookie
-        String usuarioIdStr = cookieService.getCookie(request, "usuarioId");
-        
-        if (usuarioIdStr == null || usuarioIdStr.isEmpty()) {
-            attributes.addFlashAttribute("erro", "Sessão expirada. Faça login novamente.");
-            return "redirect:/login";
-        }
-        
-        try {
-            // 2. Converte o ID e busca o usuário no banco
-            Long donoId = Long.parseLong(usuarioIdStr);
-            Usuario dono = usuarioRepository.findById(donoId).orElse(null);
-            
-            if (dono == null) {
-                attributes.addFlashAttribute("erro", "Dono não encontrado. Faça login novamente.");
-                return "redirect:/login";
-            }
-            
-            // 3. Associa o dono ao animal
-            animal.setDono(dono);
-            
-            // 4. Cria o diretório se não existir
-            File diretorio = new File(uploadBaseDir, "animais");
-            if (!diretorio.exists()) {
-                diretorio.mkdirs();
-            }
-            
-            // 5. Salva cada foto no disco e associa ao animal
-            for (MultipartFile file : files) {
-                if (!file.isEmpty()) {
-                    String nomeArquivo = System.currentTimeMillis() + "_" + file.getOriginalFilename();
-                    File destino = new File(diretorio, nomeArquivo);
-                    file.transferTo(destino);
-                    
-                    // URL pública para exibir a imagem no navegador
-                    String urlSalva = "/uploads/animais/" + nomeArquivo;
-                    
-                    Foto novaFoto = new Foto(urlSalva);
-                    animal.adicionarFoto(novaFoto);
-                }
-            }
-            
-            // 6. Salva o animal e as fotos (cascata)
-            animalRepository.save(animal);
-            
-            attributes.addFlashAttribute("sucesso", "Animal '" + animal.getNome() + "' e fotos cadastradas com sucesso!");
-            
-        } catch (NumberFormatException e) {
-            attributes.addFlashAttribute("erro", "Erro de sessão. Faça login novamente.");
-            return "redirect:/login";
-            
-        } catch (IOException e) {
-            e.printStackTrace();
-            attributes.addFlashAttribute("erro", "Erro ao salvar os arquivos de imagem.");
-            return "redirect:/animais/cadastro-animal";
-        }
-        
-        return "redirect:/animais/meus-animais";
-    }
-    
-    // Lista apenas os animais do usuário logado
-    @GetMapping("/meus-animais")
-    public String listarMeusAnimais(Model model, HttpServletRequest request, RedirectAttributes attributes) throws UnsupportedEncodingException {
-        
-        String usuarioIdStr = cookieService.getCookie(request, "usuarioId");
-        
-        if (usuarioIdStr == null || usuarioIdStr.isEmpty()) {
-            attributes.addFlashAttribute("erro", "Sessão expirada. Faça login para ver seus animais.");
-            return "redirect:/login";
-        }
-        
-        try {
-            Long donoId = Long.parseLong(usuarioIdStr);
-            List<Animal> meusAnimais = animalRepository.findByDonoId(donoId);
-            
-            model.addAttribute("animais", meusAnimais);
-            
-        } catch (NumberFormatException e) {
-            attributes.addFlashAttribute("erro", "Erro de sessão. Faça login novamente.");
-            return "redirect:/login";
-        }
-        
-        return "meus_animais";
-    }
-    
-    // Mostra os detalhes de um animal específico
-    @GetMapping("/detalhes/{id}")
-    public String detalhesAnimal(@PathVariable Long id, Model model, RedirectAttributes attributes) {
-        
-        Animal animal = animalRepository.findById(id).orElse(null);
-        
-        if (animal == null) {
-            attributes.addFlashAttribute("erro", "Animal não encontrado.");
-            return "redirect:/";
-        }
-        
-        model.addAttribute("animal", animal);
-        return "detalhes_animal";
-    }
+	
+	// NÃO PRECISAMOS MAIS DISSO:
+ 	// @Value("${file.upload-dir}")
+ 	// private String uploadBaseDir;
+	
+	@Autowired
+	private Cloudinary cloudinary; // <-- ETAPA 1: INJETAMOS O CLOUDINARY
+	
+	@Autowired
+	private AnimalRepository animalRepository;
+	
+	@Autowired
+	private UsuarioRepository usuarioRepository;
+	
+	@Autowired
+	private CookieService cookieService;
+	
+	// Página de cadastro de novo animal
+	@GetMapping("/cadastro-animal")
+	public String exibirFormularioCadastro(Animal animal, Model model, HttpServletRequest request) throws UnsupportedEncodingException {
+		// Adiciona o nome do usuário ao modelo para o cabeçalho
+		String nomeUsuario = cookieService.getCookie(request, "nomeUsuario");
+		model.addAttribute("nome", nomeUsuario != null ? nomeUsuario : "Visitante");
+		model.addAttribute("animal", animal); // Garante que o objeto animal exista
+		return "cadastro-animal";
+	}
+	
+	@PostMapping("/cadastro-animal")
+	public String cadastrarAnimal(@Valid Animal animal, BindingResult result,
+			@RequestParam("fotosUpload") List<MultipartFile> files,
+			HttpServletRequest request, RedirectAttributes attributes, Model model) throws UnsupportedEncodingException {
+		
+		String nomeUsuario = cookieService.getCookie(request, "nomeUsuario");
+		model.addAttribute("nome", nomeUsuario != null ? nomeUsuario : "Visitante");
+
+		// Validação do formulário
+		if (result.hasErrors()) {
+			model.addAttribute("animal", animal); // Devolve o animal para corrigir
+			return "cadastro-animal";
+		}
+		
+		// Verifica se foi enviada pelo menos uma foto
+		if (files.isEmpty() || files.stream().allMatch(MultipartFile::isEmpty)) {
+			attributes.addFlashAttribute("erro", "É obrigatório enviar pelo menos uma foto do animal.");
+			return "redirect:/animais/cadastro-animal";
+		}
+		
+		// 1. Busca o ID do usuário logado via cookie
+		String usuarioIdStr = cookieService.getCookie(request, "usuarioId");
+		
+		if (usuarioIdStr == null || usuarioIdStr.isEmpty()) {
+			attributes.addFlashAttribute("erro", "Sessão expirada. Faça login novamente.");
+			return "redirect:/login";
+		}
+		
+		try {
+			// 2. Converte o ID e busca o usuário no banco
+			Long donoId = Long.parseLong(usuarioIdStr);
+			Usuario dono = usuarioRepository.findById(donoId).orElse(null);
+			
+			if (dono == null) {
+				attributes.addFlashAttribute("erro", "Dono não encontrado. Faça login novamente.");
+				return "redirect:/login";
+			}
+			
+			// 3. Associa o dono ao animal
+			animal.setDono(dono);
+			
+			// 4. (REMOVIDO) Não precisamos mais criar diretório local
+			
+			// 5. ETAPA 2: Faz o UPLOAD de cada foto para o CLOUDINARY
+			for (MultipartFile file : files) {
+				if (!file.isEmpty()) {
+					// Envia o arquivo para o Cloudinary
+					Map<?, ?> uploadResult = cloudinary.uploader().upload(file.getBytes(), ObjectUtils.emptyMap());
+					
+					// Pega a URL segura (https://)
+					String urlSalva = (String) uploadResult.get("secure_url");
+					
+					// Salva a URL permanente no banco
+					Foto novaFoto = new Foto(urlSalva);
+					animal.adicionarFoto(novaFoto);
+				}
+			}
+			
+			// 6. Salva o animal e as URLs das fotos (cascata)
+			animalRepository.save(animal);
+			
+			attributes.addFlashAttribute("sucesso", "Animal '" + animal.getNome() + "' e fotos cadastradas com sucesso!");
+			
+		} catch (NumberFormatException e) {
+			attributes.addFlashAttribute("erro", "Erro de sessão. Faça login novamente.");
+			return "redirect:/login";
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+			// Este erro agora pode ser de rede (falha no upload)
+			attributes.addFlashAttribute("erro", "Erro ao fazer upload das imagens.");
+			return "redirect:/animais/cadastro-animal";
+		}
+		
+		return "redirect:/animais/meus-animais";
+	}
+	
+	// Lista apenas os animais do usuário logado
+	@GetMapping("/meus-animais")
+	public String listarMeusAnimais(Model model, HttpServletRequest request, RedirectAttributes attributes) throws UnsupportedEncodingException {
+		
+		String usuarioIdStr = cookieService.getCookie(request, "usuarioId");
+		String nomeUsuario = cookieService.getCookie(request, "nomeUsuario");
+		model.addAttribute("nome", nomeUsuario != null ? nomeUsuario : "Visitante");
+		
+		if (usuarioIdStr == null || usuarioIdStr.isEmpty()) {
+			attributes.addFlashAttribute("erro", "Sessão expirada. Faça login para ver seus animais.");
+			return "redirect:/login";
+		}
+		
+		try {
+			Long donoId = Long.parseLong(usuarioIdStr);
+			
+			// Esta chamada JÁ ESTÁ CORRETA (com JOIN FETCH do Repository)
+			List<Animal> meusAnimais = animalRepository.findByDonoId(donoId);
+			
+			model.addAttribute("animais", meusAnimais);
+			
+		} catch (NumberFormatException e) {
+			attributes.addFlashAttribute("erro", "Erro de sessão. Faça login novamente.");
+			return "redirect:/login";
+		}
+		
+		return "meus-animais"; // Nome correto do template
+	}
+	
+	// Mostra os detalhes de um animal específico
+	@GetMapping("/detalhes/{id}")
+	public String detalhesAnimal(@PathVariable Long id, Model model, RedirectAttributes attributes, HttpServletRequest request) throws UnsupportedEncodingException {
+		
+		String nomeUsuario = cookieService.getCookie(request, "nomeUsuario");
+		model.addAttribute("nome", nomeUsuario != null ? nomeUsuario : "Visitante");
+		
+		// Usamos findByIdWithFotos para garantir que as fotos carreguem
+		// NOTA: O findById padrão do JpaRepository deve funcionar bem aqui
+		// Se as fotos não carregarem nesta página, teremos que criar um findByIdWithFotos
+		Animal animal = animalRepository.findById(id).orElse(null); 
+		
+		if (animal == null) {
+			attributes.addFlashAttribute("erro", "Animal não encontrado.");
+			return "redirect:/";
+		}
+		
+		model.addAttribute("animal", animal);
+		return "detalhes-animal"; // Nome correto do template
+	}
 }

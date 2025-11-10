@@ -102,49 +102,47 @@ body {
 /* GRID DE ANIMAIS */
 /* ======================== */
 .animal-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, 180px);
-  gap: 20px;
-  justify-items: center;
-
-  justify-content: center;
-  background-color: #2e8b57;
-  padding: 20px;
-  border-radius: 12px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, 180px); 
+  gap: 20px;
+  justify-items: center;
+  justify-content: center;
+  background-color: #2e8b57;
+  padding: 20px;
+  border-radius: 12px;
 }
 
 /* ======================== */
 /* CARD DO ANIMAL */
 /* ======================== */
 .animal-card {
-  position: relative;
-  width: 100%; 
-  border-radius: 12px;
-  overflow: hidden;
-  background-color: #fff;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-  display: flex;
-  flex-direction: column;
-  transition: transform 0.3s ease;
+  position: relative; 
+  width: 100%; 
+  border-radius: 12px;
+  overflow: hidden;
+  background-color: #fff;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.3s ease;
 }
 
 .animal-card:hover {
   transform: scale(1.05);
 }
 
-/* WRAPPER DA IMAGEM */
 .card-image-wrapper {
-  position: relative;
-  width: 100%;
-  height: 180px;
-  overflow: hidden;
+  position: relative;
+  width: 100%; 
+  height: 220px; 
+  overflow: hidden;
 }
 
 .card-image {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: transform 0.3s ease;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
 }
 
 .animal-card:hover .card-image {
@@ -153,19 +151,21 @@ body {
 
 /* DETALHES SOBREPOSTOS */
 .card-content {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  background: rgba(46,139,87,0.85);
-  color: #fff;
-  padding: 8px;
-  text-align: center;
-  transform: translateY(100%);
-  transition: transform 0.3s ease;
+  position: absolute; 
+  bottom: 0;
+  width: 100%;
+  background: rgba(46,139,87,0.85);
+  color: #fff;
+  padding: 8px;
+  text-align: center;
+  
+
+  transform: translateY(100%); 
+  transition: transform 0.3s ease;
 }
 
 .animal-card:hover .card-content {
-  transform: translateY(0);
+  transform: translateY(0);
 }
 
 .card-content h3 {

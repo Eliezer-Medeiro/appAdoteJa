@@ -4,73 +4,70 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Adote Já - Meus Animais</title>
-    <link rel="stylesheet" th:href="@{/css/home_style.css}">
+    <link rel="stylesheet" th:href="@{/css/home_meus_animais.css}">
 </head>
 <body>
 
-    <!-- Barra Superior -->
-    <header class="navbar-top">
-        <div class="container">
-            <nav class="nav-links">
-                <a th:href="@{/}" class="nav-link">Home</a>
-                <a th:href="@{/animais/cadastro-animal}" class="nav-link">Doar</a>
-                <a th:href="@{/animais/meus-animais}" class="nav-link active">Meus Animais</a>
-            </nav>
-            <div class="user-profile">
-                <span th:text="${nome}">Usuário Logado</span>
-                <a th:href="@{/sair}" class="btn-logout">Sair</a>
+<header class="navbar-top">
+    <div class="nav-links">
+        <a th:href="@{/}" class="nav-link">Home</a>
+        <a th:href="@{/animais/cadastro-animal}" class="nav-link">Doar</a>
+        <a th:href="@{/animais/meus-animais}" class="nav-link active">Meus Animais</a>
+    </div>
+    <div class="user-profile">
+        <span th:text="${nome}">Usuário Logado</span>
+        <a th:href="@{/sair}" class="btn-logout">Sair</a>
+    </div>
+</header>
+
+<main class="main-layout">
+
+    <section class="conteudo-principal">
+        <h1>Meus Animais Cadastrados</h1>
+        <p>Gerencie aqui os animais que você cadastrou para adoção.</p>
+
+        <!-- Mensagem de sucesso -->
+        <div th:if="${sucesso}" class="alert-success">
+            <p th:text="${sucesso}"></p>
+        </div>
+
+        <!-- Lista vazia -->
+        <div th:if="${#lists.isEmpty(animais)}" class="alerta-vazio">
+            <p>Você ainda não cadastrou nenhum animal.</p>
+            <p><a th:href="@{/animais/cadastro-animal}">Cadastre seu primeiro animal aqui!</a></p>
+        </div>
+
+        <div class="animal-grid">
+            <div th:each="animal : ${animais}" class="animal-card">
+
+                <img th:if="${!#lists.isEmpty(animal.fotos)}"
+                     th:src="${animal.fotos[0].url}" alt="Foto do Animal" class="card-image">
+
+                <img th:unless="${!#lists.isEmpty(animal.fotos)}"
+                     src="https://placehold.co/400x300/e0e0e0/777?text=Sem+Foto"
+                     alt="Sem Foto" class="card-image">
+
+                <div class="card-content">
+                    <h3 th:text="${animal.nome}">Nome do Animal</h3>
+                    <p class="card-details" th:text="|${animal.sexo}, ${animal.idade} anos|">Macho, 2 anos</p>
+                    <p class="card-location" th:text="${animal.raca}">Raça</p>
+                    <p class="card-status"
+                       th:text="${animal.status}"
+                       th:classappend="${animal.status == 'Disponível' ? ' status-disponivel' : ' status-adotado'}">
+                        Disponível
+                    </p>
+
+                    <div class="acoes-animal">
+                        <a th:href="@{/animais/editar/{id}(id=${animal.id})}" class="btn-editar">Editar</a>
+                        <button class="btn-adotado">Marcar como Adotado</button>
+                    </div>
+                </div>
+
             </div>
         </div>
-    </header>
+    </section>
 
-    <!-- Conteúdo principal -->
-    <main class="main-layout">
-
-        <!-- GALERIA DOS MEUS ANIMAIS -->
-        <section class="conteudo-principal">
-            <h1>Meus Animais Cadastrados</h1>
-            <p>Gerencie aqui os animais que você cadastrou para adoção.</p>
-
-            <div th:if="${sucesso}" class="alert-success">
-                <p th:text="${sucesso}"></p>
-            </div>
-
-            <div th:if="${#lists.isEmpty(animais)}" class="alerta-vazio">
-                <p>Você ainda não cadastrou nenhum animal.</p>
-                <p><a th:href="@{/animais/cadastro-animal}">Cadastre seu primeiro animal aqui!</a></p>
-            </div>
-
-            <div class="animal-grid">
-                <div th:each="animal : ${animais}" class="animal-card">
-
-                    <img th:if="${!#lists.isEmpty(animal.fotos)}"
-                         th:src="${animal.fotos[0].url}"
-                         alt="Foto do Animal" class="card-image">
-                    <img th:unless="${!#lists.isEmpty(animal.fotos)}"
-                         src="https://placehold.co/400x300/e0e0e0/777?text=Sem+Foto"
-                         alt="Sem Foto" class="card-image">
-
-                    <div class="card-content">
-                        <h3 th:text="${animal.nome}">Nome do Animal</h3>
-                        <p class="card-details" th:text="|${animal.sexo}, ${animal.idade} anos|">Macho, 2 anos</p>
-                        <p class="card-location" th:text="${animal.raca}">Raça</p>
-                        <p class="card-status" 
-                           th:text="${animal.status}" 
-                           th:classappend="${animal.status == 'Disponível' ? ' status-disponivel' : ' status-adotado'}">
-                           Disponível
-                        </p>
-                        
-                        <div class="acoes-animal">
-                            <a th:href="@{/animais/editar/{id}(id=${animal.id})}" class="btn-editar">Editar</a>
-                            <button class="btn-adotado">Marcar como Adotado</button>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-        </section>
-
-    </main>
+</main>
 
 </body>
 </html>

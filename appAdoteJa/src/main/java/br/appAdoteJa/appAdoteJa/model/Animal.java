@@ -2,7 +2,7 @@ package br.appAdoteJa.appAdoteJa.model;
 
 import java.util.ArrayList;
 import java.util.List;
-
+import br.appAdoteJa.appAdoteJa.model.Usuario;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;

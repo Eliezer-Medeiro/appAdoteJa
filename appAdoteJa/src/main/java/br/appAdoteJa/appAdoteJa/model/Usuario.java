@@ -1,64 +1,72 @@
 package br.appAdoteJa.appAdoteJa.model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.validation.constraints.Email;
+import java.util.ArrayList;
+import java.util.List;
+
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
 
 @Entity
-public class Usuario {
+public class Animal {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long id;
-	
-	@NotBlank
-	private String nome;
-	
-	@NotBlank
-	@Email
-	@Column(unique = true)
-	private String email;
-	
-	@NotBlank
-    @Size(min=6)
-	private String senha;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-	public String getNome() {
-		return nome;
-	}
+    @NotBlank
+    private String nome;
 
-	public void setNome(String nome) {
-		this.nome = nome;
-	}
+    @NotBlank
+    private String especie;
 
-	public String getEmail() {
-		return email;
-	}
+    @NotBlank
+    private String raca;
 
-	public void setEmail(String email) {
-		this.email = email;
-	}
+    private String sexo;
 
-	public String getSenha() {
-		return senha;
-	}
+    private int idade;
 
-	public void setSenha(String senha) {
-		this.senha = senha;
-	}
+    @Column(length = 1000)
+    private String descricao;
 
-	public long getId() {
-		return id;
-	}
+    @ManyToOne
+    @JoinColumn(name = "dono_id")
+    private Usuario dono;
 
-	public void setId(long id) {
-		this.id = id;
-	}
-	
-	
+    @OneToMany(mappedBy = "animal", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Foto> fotos = new ArrayList<>();
+
+    // Método auxiliar para garantir vínculo bidirecional
+    public void adicionarFoto(Foto foto) {
+        foto.setAnimal(this);  // vincula o animal à foto
+        this.fotos.add(foto);
+    }
+
+    // getters e setters
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
+
+    public String getNome() { return nome; }
+    public void setNome(String nome) { this.nome = nome; }
+
+    public String getEspecie() { return especie; }
+    public void setEspecie(String especie) { this.especie = especie; }
+
+    public String getRaca() { return raca; }
+    public void setRaca(String raca) { this.raca = raca; }
+
+    public String getSexo() { return sexo; }
+    public void setSexo(String sexo) { this.sexo = sexo; }
+
+    public int getIdade() { return idade; }
+    public void setIdade(int idade) { this.idade = idade; }
+
+    public String getDescricao() { return descricao; }
+    public void setDescricao(String descricao) { this.descricao = descricao; }
+
+    public Usuario getDono() { return dono; }
+    public void setDono(Usuario dono) { this.dono = dono; }
+
+    public List<Foto> getFotos() { return fotos; }
+    public void setFotos(List<Foto> fotos) { this.fotos = fotos; }
 }

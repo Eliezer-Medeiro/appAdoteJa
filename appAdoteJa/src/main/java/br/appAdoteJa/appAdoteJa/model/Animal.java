@@ -26,6 +26,8 @@ public class Animal {
     private String sexo;
 
     private int idade;
+    
+    private String status = "Disponível";
 
     @Column(length = 1000)
     private String descricao;

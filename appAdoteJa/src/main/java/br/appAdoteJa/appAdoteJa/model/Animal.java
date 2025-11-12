@@ -23,6 +23,8 @@ public class Animal {
     @NotBlank
     private String raca;
 
+    private String porte;
+    
     private String sexo;
 
     private int idade;

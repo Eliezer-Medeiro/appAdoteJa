@@ -42,15 +42,12 @@
 
     <section class="info-card">
         <h1 class="animal-name" th:text="${animal.nome}">Nome do Animal</h1>
-        <p class="animal-tagline" th:text="${animal.descricaoCurta}">Descrição curta</p>
 
         <div class="quick-facts">
             <h2>Ficha Rápida</h2>
             <ul>
                 <li><span class="material-icons">cake</span> Idade: <span th:text="${animal.idade}"></span></li>
                 <li><span class="material-icons">pets</span> Porte: <span th:text="${animal.porte}"></span></li>
-                <li><span class="material-icons">favorite</span> Temperamento: <span th:text="${animal.temperamento}"></span></li>
-                <li><span class="material-icons">medical_services</span> Saúde: <span th:text="${animal.saude}"></span></li>
             </ul>
         </div>
 

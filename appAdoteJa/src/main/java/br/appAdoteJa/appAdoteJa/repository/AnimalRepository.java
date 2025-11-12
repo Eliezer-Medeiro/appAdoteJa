@@ -15,6 +15,9 @@ public interface AnimalRepository extends JpaRepository<Animal, Long> {
 
 	//Encontra animais pelo Status E cujo ID do Dono seja DIFERENTE (para a Home)
 	List<Animal> findByStatusAndDonoIdNot(String status, Long donoId);
+	// mostra o animal escolhido pelo ID e as suas fotos
+	@Query("SELECT a FROM Animal a LEFT JOIN FETCH a.fotos f WHERE a.id = :id")
+	Optional<Animal> findByIdWithFotos(@Param("id") Long id);
 
 	@Query("SELECT DISTINCT a FROM Animal a LEFT JOIN FETCH a.fotos WHERE a.dono.id = :donoId")
 	List<Animal> findByDonoId(@Param("donoId") Long donoId);

@@ -1,15 +1,68 @@
 <!DOCTYPE html>
 <html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>Teste Final</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="'Adote um Amigo - ' + ${animal.nome}">Adote um Amigo - Detalhes</title>
+    <link rel="stylesheet" th:href="@{/css/animal_style.css}">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
 <body>
-    <h1 th:text="${animal.nome}"></h1>
-    
-    <p th:if="${animal.fotos != null and !animal.fotos.isEmpty()}" 
-       th:text="${animal.fotos[0].url}">URL da Primeira Foto</p>
-    
-    <p th:text="${animal.porte}">Porte</p>
+
+<header class="app-header">
+    <a th:href="@{/}" class="back-btn"><span class="material-icons">arrow_back</span></a>
+    <h3>Detalhes do Animal</h3>
+    <a th:href="@{'/perfil/' + ${nome}}" class="profile-btn"><span class="material-icons">person</span></a>
+</header>
+
+<main class="animal-details-container">
+    
+    <section class="image-gallery">
+                <div class="main-image" 
+             th:if="${animal.fotos != null and !animal.fotos.isEmpty()}"
+             th:style="|background-image: url(${animal.fotos[0].url}); background-size: cover; background-position: center;|">
+                </div>
+        
+                <div class="main-image" 
+             th:if="${animal.fotos == null or animal.fotos.isEmpty()}"
+             style="background-color: #ccc; display: flex; align-items: center; justify-content: center;">
+            <p>Sem imagem disponível</p>
+        </div>
+    
+                <div class="thumbnails" th:if="${animal.fotos != null and !animal.fotos.isEmpty()}">
+            <div th:each="foto, iterStat : ${animal.fotos}"
+                 th:class="'thumbnail ' + (${iterStat.index == 0} ? 'active' : '')"
+                 th:style="|background-image: url(${foto.url}); background-size: cover; background-position: center;|">
+                        </div>
+        </div>
+    </section>
+
+    <section class="info-card">
+        <h1 class="animal-name" th:text="${animal.nome}">Nome do Animal</h1>
+
+        <div class="quick-facts">
+            <h2>Ficha Rápida</h2>
+            <ul>
+                <li><span class="material-icons">cake</span> Idade: <span th:text="${animal.idade}"></span></li>
+                <li><span class="material-icons">pets</span> Porte: <span th:text="${animal.porte}"></span></li>
+            </ul>
+        </div>
+
+        <div class="description">
+            <h2>Sobre o <span th:text="${animal.nome}">Animal</span></h2>
+            <p th:text="${animal.descricao}"></p>
+        </div>
+
+        <div class="spacer"></div>
+    </section>
+</main>
+
+<footer class="fixed-action-bar">
+    <button class="chat-button">
+        <span class="material-icons">chat</span>
+        Iniciar a Conversa (Adotar!)
+    </button>
+</footer>
+
 </body>
 </html>

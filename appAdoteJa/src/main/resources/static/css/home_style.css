@@ -7,6 +7,11 @@
 }
 
 body {
+  background-image: url("/images/grama.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
   background-color: #f8f9fa;
   color: #333;
   min-height: 100vh;

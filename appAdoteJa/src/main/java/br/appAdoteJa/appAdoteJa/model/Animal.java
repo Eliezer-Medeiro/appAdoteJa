@@ -1,5 +1,6 @@
 package br.appAdoteJa.appAdoteJa.model;
 
+import br.appAdoteJa.appAdoteJa.model.Usuario;
 import java.util.ArrayList;
 import java.util.List;
 

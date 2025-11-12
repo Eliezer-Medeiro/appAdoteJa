@@ -18,14 +18,25 @@
 <main class="animal-details-container">
     
     <section class="image-gallery">
-        <!-- Aqui mostra a imagem principal -->
-        <div class="main-image"
-             th:style="'background-image: url(' + ${animal.imagemUrl} + ');'">
+        <!-- Imagem principal (a primeira da lista) -->
+        <div class="main-image" 
+             th:if="${animal.fotos != null and !animal.fotos.isEmpty()}"
+             th:style="'background-image: url(' + ${animal.fotos[0].url} + '); background-size: cover; background-position: center;'">
         </div>
-
-        <!-- Se depois você quiser mostrar várias miniaturas -->
-        <div class="thumbnails">
-            <div class="thumbnail active" th:style="'background-image: url(' + ${animal.imagemUrl} + ');'"></div>
+        
+        <!-- Caso não tenha fotos -->
+        <div class="main-image" 
+             th:if="${animal.fotos == null or animal.fotos.isEmpty()}"
+             style="background-color: #ccc; display: flex; align-items: center; justify-content: center;">
+            <p>Sem imagem disponível</p>
+        </div>
+    
+        <!-- Thumbnails -->
+        <div class="thumbnails" th:if="${animal.fotos != null and !animal.fotos.isEmpty()}">
+            <div th:each="foto, iterStat : ${animal.fotos}"
+                 th:class="'thumbnail ' + (${iterStat.index == 0} ? 'active' : '')"
+                 th:style="'background-image: url(' + ${foto.url} + '); background-size: cover; background-position: center;'">
+            </div>
         </div>
     </section>
 

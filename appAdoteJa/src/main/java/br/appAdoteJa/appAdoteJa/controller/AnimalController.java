@@ -187,6 +187,6 @@ public class AnimalController {
 		}
 		
 		model.addAttribute("animal", animal);
-		return "detalhes-animal"; // Nome correto do template
+		return "detalhes_animal";
 	}
 }

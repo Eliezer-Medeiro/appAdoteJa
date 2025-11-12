@@ -69,6 +69,9 @@ public class Animal {
     public String getDescricao() { return descricao; }
     public void setDescricao(String descricao) { this.descricao = descricao; }
 
+    public String getPorte() { return porte; }
+    public void setPorte(String porte) { this.porte = porte; }
+
     public Usuario getDono() { return dono; }
     public void setDono(Usuario dono) { this.dono = dono; }
 

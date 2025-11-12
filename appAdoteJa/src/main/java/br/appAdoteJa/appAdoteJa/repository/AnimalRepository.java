@@ -1,7 +1,7 @@
 package br.appAdoteJa.appAdoteJa.repository;
 
 import java.util.List;
-
+import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query; // Importar @Query
 import org.springframework.data.repository.query.Param; // Importar @Param

@@ -176,10 +176,8 @@ public class AnimalController {
 		String nomeUsuario = cookieService.getCookie(request, "nomeUsuario");
 		model.addAttribute("nome", nomeUsuario != null ? nomeUsuario : "Visitante");
 		
-		// Usamos findByIdWithFotos para garantir que as fotos carreguem
-		// NOTA: O findById padrão do JpaRepository deve funcionar bem aqui
-		// Se as fotos não carregarem nesta página, teremos que criar um findByIdWithFotos
-		Animal animal = animalRepository.findById(id).orElse(null); 
+		// CORREÇÃO: Usamos findByIdWithFotos para forçar o carregamento das fotos na mesma consulta.
+		Animal animal = animalRepository.findByIdWithFotos(id).orElse(null);
 		
 		if (animal == null) {
 			attributes.addFlashAttribute("erro", "Animal não encontrado.");

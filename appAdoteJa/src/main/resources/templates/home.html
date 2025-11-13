@@ -108,29 +108,6 @@
     </section>
 
     <!-- BATE-PAPO -->
-    <aside class="chat-box">
-      <h2>Bate-Papo</h2>
-      <div class="chat-list">
-        <div class="chat-user" th:each="usuario : ${usuarios}">
-          <span class="user-avatar">🐾</span>
-          <span class="user-name" th:text="${usuario.nome}">Nome</span>
-        </div>
-      </div>
-
-      <div class="chat-window">
-        <div class="chat-header">
-          <span class="chat-user-name">Fulano</span>
-        </div>
-        <div class="chat-messages">
-          <div class="msg received">Oi! Tudo bem?</div>
-          <div class="msg sent">Tudo sim, e você?</div>
-        </div>
-        <div class="chat-input">
-          <input type="text" placeholder="Digite uma mensagem...">
-          <button>Enviar</button>
-        </div>
-      </div>
-    </aside>
 
   </main>
 

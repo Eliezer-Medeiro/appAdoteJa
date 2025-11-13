@@ -12,214 +12,187 @@ body {
   background-color: #f8f9fa;
   color: #333;
   min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
 /* ======================== */
-/* NAVBAR SUPERIOR */
+/* CABEÇALHO SUPERIOR */
 /* ======================== */
-.navbar-top {
+.navbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: #fff;
-  padding: 12px 20px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-}
-
-.nav-links {
-  display: flex;
-  gap: 20px;
-}
-
-.nav-link {
-  text-decoration: none;
-  color: #444;
-  font-weight: 500;
-  transition: color 0.3s;
-}
-
-.nav-link.active,
-.nav-link:hover {
-  color: #2e8b57;
-}
-
-.user-profile {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.btn-logout {
-  text-decoration: none;
+  background-color: #2e8b57;
   color: #fff;
-  background-color: #dc3545;
-  padding: 6px 12px;
-  border-radius: 8px;
-  transition: background 0.3s;
+  padding: 12px 24px;
+  font-weight: 600;
+  font-size: 1.1rem;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
 }
 
-.btn-logout:hover {
-  background-color: #b52a38;
+.navbar a {
+  color: #fff;
+  text-decoration: none;
+  transition: opacity 0.3s;
+}
+
+.navbar a:hover {
+  opacity: 0.8;
 }
 
 /* ======================== */
-/* LAYOUT PRINCIPAL */
+/* BANNER DO ANIMAL */
 /* ======================== */
-.main-layout {
-  padding: 20px 30px;
-  display: flex;
-  justify-content: center;
+.banner-container {
+  position: relative;
+  width: 100%;
+  height: 280px;
+  overflow: hidden;
+  background: #ccc;
+}
+
+.banner-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: brightness(90%);
+}
+
+.foto-perfil-animal {
+  position: absolute;
+  bottom: -45px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  border: 4px solid #fff;
+  object-fit: cover;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.3);
+  background-color: #fff;
 }
 
 /* ======================== */
 /* CONTEÚDO PRINCIPAL */
 /* ======================== */
-.conteudo-principal {
-  width: 100%;
-  max-width: 1200px;
+.conteudo {
+  flex: 1;
+  max-width: 850px;
+  margin: 70px auto 80px;
+  background-color: #fff;
+  border-radius: 16px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+  overflow: hidden;
 }
 
-.conteudo-principal h1 {
+.conteudo-header {
+  padding: 25px;
+  border-bottom: 1px solid #e6e6e6;
+  text-align: center;
+}
+
+.conteudo-header h1 {
+  color: #2e8b57;
   font-size: 1.8rem;
+  margin-bottom: 8px;
+}
+
+.conteudo-header .subinfo {
+  font-size: 0.95rem;
+  color: #777;
+}
+
+/* ======================== */
+/* FICHA RÁPIDA */
+/* ======================== */
+.ficha-rapida {
+  padding: 25px;
+  border-bottom: 1px solid #e6e6e6;
+}
+
+.ficha-rapida h2 {
+  font-size: 1.2rem;
   color: #2e8b57;
-  margin-bottom: 5px;
+  margin-bottom: 10px;
 }
 
-.conteudo-principal p {
-  color: #666;
-  margin-bottom: 20px;
-}
-
-.alert-success, .alerta-vazio {
-  background-color: #e8f5e9;
-  color: #2e8b57;
-  padding: 10px 15px;
-  border-radius: 8px;
-  margin-bottom: 15px;
-}
-
-/* ======================== */
-/* GRID DE ANIMAIS */
-/* ======================== */
-.animal-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, 180px); 
-  gap: 20px;
-  justify-items: center;
-  justify-content: center;
-  background-color: #2e8b57;
-  padding: 20px;
-  border-radius: 12px;
-}
-
-/* ======================== */
-/* CARD DO ANIMAL */
-/* ======================== */
-.animal-card {
-  position: relative; 
-  width: 100%; 
-  border-radius: 12px;
-  overflow: hidden;
-  background-color: #fff;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-  display: flex;
-  flex-direction: column;
-  transition: transform 0.3s ease;
-}
-
-.animal-card:hover {
-  transform: scale(1.05);
-}
-
-.card-image-wrapper {
-  position: relative;
-  width: 100%; 
-  height: 220px; 
-  overflow: hidden;
-}
-
-.card-image {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: transform 0.3s ease;
-}
-
-.animal-card:hover .card-image {
-  transform: scale(1.1);
-}
-
-/* DETALHES SOBREPOSTOS */
-.card-content {
-  position: absolute; 
-  bottom: 0;
-  width: 100%;
-  background: rgba(46,139,87,0.85);
-  color: #fff;
-  padding: 8px;
-  text-align: center;
-  
-
-  transform: translateY(100%); 
-  transition: transform 0.3s ease;
-}
-
-.animal-card:hover .card-content {
-  transform: translateY(0);
-}
-
-.card-content h3 {
-  margin: 0;
-  font-size: 1rem;
-}
-
-.card-details, .card-location, .card-status {
-  font-size: 0.8rem;
-  margin: 2px 0;
-}
-
-/* STATUS */
-.status-disponivel {
-  color: #00ff7f;
-  font-weight: bold;
-}
-
-.status-adotado {
-  color: #ff6347;
-  font-weight: bold;
-}
-
-/* BOTÕES */
-.acoes-animal {
+.ficha-item {
   display: flex;
-  justify-content: center;
-  gap: 5px;
-  margin-top: 8px;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+  font-size: 0.95rem;
 }
 
-.btn-editar, .btn-adotado {
-  font-size: 0.75rem;
-  padding: 4px 8px;
-  border-radius: 6px;
-  border: none;
-  cursor: pointer;
-  transition: background 0.3s ease;
+.ficha-item i {
+  color: #2e8b57;
 }
 
-.btn-editar {
+/* ======================== */
+/* DESCRIÇÃO */
+/* ======================== */
+.descricao {
+  padding: 25px;
+}
+
+.descricao h2 {
+  font-size: 1.2rem;
+  color: #2e8b57;
+  margin-bottom: 10px;
+}
+
+.descricao p {
+  color: #555;
+  line-height: 1.6;
+  font-size: 0.95rem;
+}
+
+/* ======================== */
+/* BOTÃO FIXO DE ADOÇÃO */
+/* ======================== */
+.btn-adotar {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
   background-color: #2e8b57;
   color: #fff;
+  border: none;
+  border-radius: 30px;
+  padding: 16px 36px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.25);
+  transition: background 0.3s, transform 0.2s;
 }
 
-.btn-editar:hover {
+.btn-adotar:hover {
   background-color: #256d46;
+  transform: translateX(-50%) scale(1.03);
 }
 
-.btn-adotado {
-  background-color: #dc3545;
-  color: #fff;
-}
+/* ======================== */
+/* RESPONSIVIDADE */
+/* ======================== */
+@media (max-width: 768px) {
+  .conteudo {
+    margin: 60px 15px 90px;
+  }
 
-.btn-adotado:hover {
-  background-color: #b52a38;
+  .banner-container {
+    height: 220px;
+  }
+
+  .foto-perfil-animal {
+    width: 75px;
+    height: 75px;
+    bottom: -38px;
+  }
+
+  .btn-adotar {
+    padding: 14px 28px;
+    font-size: 0.95rem;
+  }
 }

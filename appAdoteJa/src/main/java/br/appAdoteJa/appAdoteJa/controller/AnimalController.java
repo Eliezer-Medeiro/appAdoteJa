@@ -180,6 +180,20 @@ public class AnimalController {
 	    
 	    return "meus_animais";
 	}
+
+	@GetMapping("/editar/{id}")
+	public String carregarPaginaEdicao(@PathVariable Long id, Model model, RedirectAttributes ra) {
+	    Animal animal = animalRepository.findById(id).orElse(null);
+	
+	    if (animal == null) {
+	        ra.addFlashAttribute("erro", "Animal não encontrado!");
+	        return "redirect:/animais/meus-animais";
+	    }
+	
+	    model.addAttribute("animal", animal);
+	    return "editar_animal"; // nome do HTML
+	}
+
 	
 	// Mostra os detalhes de um animal específico
 	@GetMapping("/detalhes/{id}")

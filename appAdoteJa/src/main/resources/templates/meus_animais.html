@@ -60,9 +60,8 @@
                     <p class="card-location" th:text="${animal.raca ?: 'Raça desconhecida'}">Raça</p>
                     
                     <p class="card-status"
-                        th:text="${animal.status}"
-                        th:classappend="${animal.status == 'Disponível' ? ' status-disponivel' : ' status-adotado'}">
-                         Disponível
+                        th:text="${animal.status ?: 'Disponível'}"
+                        th:classappend="${(animal.status == null or animal.status == 'Disponível') ? ' status-disponivel' : ' status-adotado'}">
                     </p>
         
                     <div class="acoes-animal">

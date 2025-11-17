@@ -182,27 +182,65 @@ public class AnimalController {
 	}
 
 	@GetMapping("/editar/{id}")
-	public String carregarPaginaEdicao(@PathVariable Long id, Model model, RedirectAttributes ra) {
-	    Animal animal = animalRepository.findById(id).orElse(null);
+	public String carregarPaginaEdicao(@PathVariable Long id, Model model, RedirectAttributes ra, HttpServletRequest request) throws UnsupportedEncodingException {
+	
+	    // Validar sessão
+	    String usuarioIdStr = cookieService.getCookie(request, "usuarioId");
+	    if (usuarioIdStr == null) {
+	        ra.addFlashAttribute("erro", "Sessão expirada. Faça login novamente.");
+	        return "redirect:/login";
+	    }
+	
+	    Long usuarioId = Long.parseLong(usuarioIdStr);
+	
+	    Animal animal = animalRepository.findById(id)
+	         .orElse(null);
 	
 	    if (animal == null) {
 	        ra.addFlashAttribute("erro", "Animal não encontrado!");
+	        return "redirect:/animais/meus-animais";
+	    }
+	
+	    // Segurança EXTRA
+	    if (!animal.getDono().getId().equals(usuarioId)) {
+	        ra.addFlashAttribute("erro", "Você não tem permissão para editar este animal!");
 	        return "redirect:/animais/meus-animais";
 	    }
 	
 	    model.addAttribute("animal", animal);
-	    return "editar_animal"; // nome do HTML
+	    return "editar_animal";
 	}
 
 	@PostMapping("/editar/{id}")
-	public String salvarEdicao(@PathVariable Long id, @ModelAttribute Animal animalAtualizado, RedirectAttributes ra) {
-	    Animal animal = animalRepository.findById(id).orElse(null);
+	public String salvarEdicao(
+	        @PathVariable Long id, 
+	        @ModelAttribute Animal animalAtualizado, 
+	        RedirectAttributes ra,
+	        HttpServletRequest request) throws UnsupportedEncodingException {
+	
+	    String usuarioIdStr = cookieService.getCookie(request, "usuarioId");
+	    if (usuarioIdStr == null) {
+	        ra.addFlashAttribute("erro", "Sessão expirada. Faça login novamente.");
+	        return "redirect:/login";
+	    }
+	
+	    Long usuarioId = Long.parseLong(usuarioIdStr);
+	
+	    Animal animal = animalRepository.findById(id)
+	            .orElse(null);
 	
 	    if (animal == null) {
 	        ra.addFlashAttribute("erro", "Animal não encontrado!");
 	        return "redirect:/animais/meus-animais";
 	    }
 	
+	    // Segurança
+	    if (!animal.getDono().getId().equals(usuarioId)) {
+	        ra.addFlashAttribute("erro", "Você não tem permissão para editar este animal!");
+	        return "redirect:/animais/meus-animais";
+	    }
+	
+	    // Atualizar campos
 	    animal.setNome(animalAtualizado.getNome());
 	    animal.setRaca(animalAtualizado.getRaca());
 	    animal.setEspecie(animalAtualizado.getEspecie());
@@ -213,6 +251,7 @@ public class AnimalController {
 	    animal.setStatus(animalAtualizado.getStatus());
 	
 	    animalRepository.save(animal);
+	
 	    ra.addFlashAttribute("sucesso", "Animal atualizado com sucesso!");
 	
 	    return "redirect:/animais/meus-animais";

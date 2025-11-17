@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar Animal</title>
+    <link rel="stylesheet" th:href="@{/css/cadastro_animal_style.css}">
+</head>
+
+<body>
+
+<header class="navbar-top">
+    <a th:href="@{/}" class="nav-link">Home</a>
+    <a th:href="@{/animais/meus-animais}" class="nav-link">Voltar</a>
+</header>
+
+<main class="form-container">
+
+    <h2>Editar Informações do Animal</h2>
+
+    <form th:action="@{/animais/editar/{id}(id=${animal.id})}" method="post" th:object="${animal}">
+
+        <!-- NOME -->
+        <label for="nome">Nome:</label>
+        <input type="text" id="nome" th:field="*{nome}" required>
+
+        <!-- RAÇA -->
+        <label for="raca">Raça:</label>
+        <input type="text" id="raca" th:field="*{raca}" required>
+
+        <!-- ESPÉCIE -->
+        <label for="especie">Espécie:</label>
+        <input type="text" id="especie" th:field="*{especie}" required>
+
+        <!-- PORTE -->
+        <label for="porte">Porte:</label>
+        <select id="porte" th:field="*{porte}">
+            <option value="">Selecione...</option>
+            <option>Pequeno</option>
+            <option>Médio</option>
+            <option>Grande</option>
+        </select>
+
+        <!-- SEXO -->
+        <label for="sexo">Sexo:</label>
+        <select id="sexo" th:field="*{sexo}">
+            <option value="">Selecione...</option>
+            <option>Macho</option>
+            <option>Fêmea</option>
+        </select>
+
+        <!-- IDADE -->
+        <label for="idade">Idade (anos):</label>
+        <input type="number" id="idade" th:field="*{idade}" min="0" max="30">
+
+        <!-- STATUS -->
+        <label for="status">Status:</label>
+        <select id="status" th:field="*{status}">
+            <option>Disponível</option>
+            <option>Adotado</option>
+        </select>
+
+        <!-- DESCRIÇÃO -->
+        <label for="descricao">Descrição:</label>
+        <textarea id="descricao" th:field="*{descricao}" rows="4" placeholder="Informações adicionais sobre o animal..."></textarea>
+
+        <button type="submit" class="btn-save">Salvar Alterações</button>
+    </form>
+
+</main>
+
+</body>
+</html>

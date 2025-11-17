@@ -1,53 +1,99 @@
-<div class="animal-grid">
-    <div th:each="animal : ${animais}" class="animal-card">
-    
-        <div class="card-image-wrapper"> 
-            <img th:if="${animal.fotos != null and !#lists.isEmpty(animal.fotos)}"
-                 th:src="${animal.fotos[0].url}" alt="Foto do Animal" class="card-image">
-            
-            <img th:unless="${animal.fotos != null and !#lists.isEmpty(animal.fotos)}"
-                 src="https://placehold.co/400x300/e0e0e0/777?text=Sem+Foto"
-                 alt="Sem Foto" class="card-image">
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Adote Já - Meus Animais</title>
+    <link rel="stylesheet" th:href="@{/css/meus_animais_style.css}">
+</head>
+<body>
+
+<header class="navbar-top">
+    <div class="nav-links">
+        <a th:href="@{/}" class="nav-link">Home</a>
+        <a th:href="@{/animais/cadastro-animal}" class="nav-link">Doar</a>
+        <a th:href="@{/animais/meus-animais}" class="nav-link active">Meus Animais</a>
+    </div>
+    <div class="user-profile">
+        <span th:text="${nome}">Usuário Logado</span>
+        <a th:href="@{/sair}" class="btn-logout">Sair</a>
+    </div>
+</header>
+
+<main class="main-layout">
+
+    <section class="conteudo-principal">
+        <h1>Meus Animais Cadastrados</h1>
+        <p>Gerencie aqui os animais que você cadastrou para adoção.</p>
+
+        <div th:if="${sucesso}" class="alert-success">
+            <p th:text="${sucesso}"></p>
         </div>
-        <div class="card-content">
-            <h3 th:text="${animal.nome ?: 'Animal sem nome'}">Nome do Animal</h3> 
-            
-            <p class="card-details" 
-               th:text="|${animal.sexo ?: '?'}, ${animal.idade ?: '?' } anos|">
-               Macho, 2 anos
-            </p>
-            
-            <p class="card-location" th:text="${animal.raca ?: 'Raça desconhecida'}">Raça</p>
-            
-            <p class="card-status"
-                th:text="${animal.status}"
-                th:classappend="${animal.status == 'Disponível' ? ' status-disponivel' : ' status-adotado'}">
-                 Disponível
-            </p>
-            
-            <div class="acoes-animal">
-                <a th:href="@{/animais/editar/{id}(id=${animal.id})}" class="btn-editar">Editar</a>
+        <div th:if="${erro}" class="alert-error">
+            <p th:text="${erro}"></p>
+        </div>
+
+        <div th:if="${#lists.isEmpty(animais)}" class="alerta-vazio">
+            <p>Você ainda não cadastrou nenhum animal.</p>
+            <p><a th:href="@{/animais/cadastro-animal}">Cadastre seu primeiro animal aqui!</a></p>
+        </div>
+
+        <div class="animal-grid">
+            <div th:each="animal : ${animais}" class="animal-card">
+        
+                <div class="card-image-wrapper"> 
+                    <img th:if="${animal.fotos != null and !#lists.isEmpty(animal.fotos) and animal.fotos[0].url != null}"
+                         th:src="${animal.fotos[0].url}" alt="Foto do Animal" class="card-image">
+                    
+                    <img th:unless="${animal.fotos != null and !#lists.isEmpty(animal.fotos) and animal.fotos[0].url != null}"
+                         src="https://placehold.co/400x300/e0e0e0/777?text=Sem+Foto"
+                         alt="Sem Foto" class="card-image">
+                </div>
                 
-                <form th:if="${animal.status == 'Disponível'}" 
-                      th:action="@{/animais/marcar-adotado/{id}(id=${animal.id})}" 
-                      method="post" 
-                      style="display:inline;">
-                    <button type="submit" class="btn-adotado" 
-                            onclick="return confirm('ATENÇÃO: Você confirma que este animal foi adotado?');">
-                        Marcar como Adotado
-                    </button>
-                </form>
-                
-                <form th:if="${animal.status == 'Adotado'}" 
-                      th:action="@{/animais/marcar-disponivel/{id}(id=${animal.id})}" 
-                      method="post" 
-                      style="display:inline;">
-                    <button type="submit" class="btn-disponivel" 
-                            onclick="return confirm('Deseja realmente reverter o status para Disponível?');">
-                        Tornar Disponível
-                    </button>
-                </form>
+                <div class="card-content">
+                    <h3 th:text="${animal.nome ?: 'Animal sem nome'}">Nome do Animal</h3>
+                    
+                    <p class="card-details" 
+                       th:text="|${animal.sexo ?: 'Não informado'}, ${animal.idade ?: '?' } anos|">
+                       Macho, 2 anos
+                    </p>
+                    <p class="card-location" th:text="${animal.raca ?: 'Raça desconhecida'}">Raça</p>
+                    
+                    <p class="card-status"
+                        th:text="${animal.status}"
+                        th:classappend="${animal.status == 'Disponível' ? ' status-disponivel' : ' status-adotado'}">
+                         Disponível
+                    </p>
+        
+                    <div class="acoes-animal">
+                        <a th:href="@{/animais/editar/{id}(id=${animal.id})}" class="btn-editar">Editar</a>
+                        
+                        <form th:if="${animal.status == 'Disponível'}" 
+                              th:action="@{/animais/marcar-adotado/{id}(id=${animal.id})}" 
+                              method="post" 
+                              style="display:inline;">
+                            <button type="submit" class="btn-adotado" 
+                                    onclick="return confirm('ATENÇÃO: Você confirma que este animal foi adotado?');">
+                                Marcar como Adotado
+                            </button>
+                        </form>
+                        
+                        <form th:if="${animal.status == 'Adotado'}" 
+                              th:action="@{/animais/marcar-disponivel/{id}(id=${animal.id})}" 
+                              method="post" 
+                              style="display:inline;">
+                            <button type="submit" class="btn-disponivel" 
+                                    onclick="return confirm('Deseja realmente reverter o status para Disponível?');">
+                                Tornar Disponível
+                            </button>
+                        </form>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
-</div>
+    </section>
+
+</main>
+
+</body>
+</html>

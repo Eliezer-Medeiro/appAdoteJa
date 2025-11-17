@@ -77,4 +77,12 @@ public class Animal {
 
     public List<Foto> getFotos() { return fotos; }
     public void setFotos(List<Foto> fotos) { this.fotos = fotos; }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
 }

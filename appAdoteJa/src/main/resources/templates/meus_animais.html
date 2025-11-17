@@ -41,10 +41,10 @@
             <div th:each="animal : ${animais}" class="animal-card">
         
                 <div class="card-image-wrapper"> 
-                    <img th:if="${!#lists.isEmpty(animal.fotos)}"
+                    <img th:if="${animal.fotos != null and !#lists.isEmpty(animal.fotos)}"
                          th:src="${animal.fotos[0].url}" alt="Foto do Animal" class="card-image">
-        
-                    <img th:unless="${!#lists.isEmpty(animal.fotos)}"
+                    
+                    <img th:unless="${animal.fotos != null and !#lists.isEmpty(animal.fotos)}"
                          src="https://placehold.co/400x300/e0e0e0/777?text=Sem+Foto"
                          alt="Sem Foto" class="card-image">
                 </div>

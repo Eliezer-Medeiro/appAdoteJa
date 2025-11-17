@@ -1,66 +1,74 @@
 <!DOCTYPE html>
-<!-- 1. Adicionar o namespace do Thymeleaf -->
 <html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
-	<head>
-		<title>Cadastro</title>
-		<meta charset="utf-8">
-		<link rel="stylesheet" th:href="@{/css/login_cadastro_style.css}">
-	</head>
-	<body>
-		<div class="container"> 
-	        <div class="pet-imageDog">
-	            <img th:src="@{/images/dog.png}" alt="Cachorro">
-	        </div>
-	        <div class="login-wrapper"> 
-	            <h1 class="titulo">AdoteJá</h1>
-	        </div>
-    	</div>
-		<div class="register-container">
-			<h2 class="text-center mb-4">Cadastro</h2>
-			
-			<!-- 2. Adicionar th:object e th:action. O objeto 'usuario' é o que vem do Controller. -->
-			<form th:object="${usuario}" method="post" th:action="@{/cadastro}">
-				
-				<div class="form-group">
-					<label for="username">Nome de Usuário</label>
-					<!-- 3. Usar th:field para realizar o binding com o campo 'nome' do objeto Usuario -->
-					<input type="text" th:field="*{nome}" class="form-control" id="username"
-					placeholder="Digite seu nome de usuário">
-					
-					<!-- 4. Exibir mensagens de erro para o campo 'nome' -->
-					<span th:if="${#fields.hasErrors('nome')}" th:errors="*{nome}" class="error-message"></span>
-				</div>
-				
-				<div class="form-group">
-					<label for="email">E-mail</label>
-					<!-- 3. Usar th:field para realizar o binding com o campo 'email' -->
-					<input type="email" th:field="*{email}" class="form-control" id="email"
-					placeholder="Digite seu e-mail">
-					
-					<span th:if="${erro_email}" th.text="${erro_email}" style="color: red;"></span>
-				</div>
-				
-				<div class="form-group">
-					<label for="password">Senha</label>
-					<!-- 3. Usar th:field para realizar o binding com o campo 'senha' -->
-					<!-- Importante: a senha deve ser enviada como tipo 'password' -->
-					<input type="password" th:field="*{senha}" class="form-control" id="password"
-					placeholder="Digite sua senha">
-					
-					<!-- 4. Exibir mensagens de erro para o campo 'senha' -->
-					<span th:if="${#fields.hasErrors('senha')}" th:errors="*{senha}" class="error-message"></span>
-				</div>
-				
-				<div class="form-group">
-					<label for="confrmPassword">Confirme sua senha</label>
-					<!-- Este campo geralmente não é mapeado na entidade e deve ser validado no Controller/Service -->
-					<input type="password" name="confirmaSenha" class="form-control" id="confrmPassword"
-					placeholder="Confirme sua senha">
-				</div>
-				
-				<button type="submit" class="btn btn-primary btn-block">Cadastrar</button><br>
-				<a th:href="@{/login}">Voltar ao Login</a>
-			</form>
-		</div>	
-	</body>
+<head>
+    <meta charset="utf-8">
+    <title>Cadastro - AdoteJá</title>
+    <link rel="stylesheet" th:href="@{/css/login_cadastro_style.css}">
+</head>
+<body>
+
+    <!-- MENSAGENS DE ERRO/SUCESSO (OPCIONAL) -->
+    <div th:if="${mensagem_sucesso}" class="alert alert-success">
+        <p th:text="${mensagem_sucesso}"></p>
+    </div>
+    <div th:if="${erro}" class="alert alert-danger" th:text="${erro}"></div>
+
+    <!-- LAYOUT PRINCIPAL (IGUAL AO LOGIN) -->
+    <div class="container">
+
+        <!-- IMG DOG -->
+        <div class="pet-imageDog">
+            <img th:src="@{/images/dog.png}" alt="Cachorro">
+        </div>
+
+        <!-- WRAPPER DO TÍTULO -->
+        <div class="login-wrapper">
+            <h1 class="titulo">AdoteJá</h1>
+        </div>
+
+        <!-- IMG CAT -->
+        <div class="pet-imageCat">
+            <img th:src="@{/images/cat.png}" alt="Gato">
+        </div>
+    </div>
+
+    <!-- CARD DE CADASTRO -->
+    <div class="register-container">
+        <h2>Cadastro</h2>
+
+        <form th:object="${usuario}" method="post" th:action="@{/cadastro}">
+
+            <!-- NOME -->
+            <div class="form-group">
+                <label for="username">Nome de Usuário</label>
+                <input type="text" th:field="*{nome}" class="form-control" id="username" placeholder="Digite seu nome de usuário">
+                <span th:if="${#fields.hasErrors('nome')}" th:errors="*{nome}" class="error-message"></span>
+            </div>
+
+            <!-- EMAIL -->
+            <div class="form-group">
+                <label for="email">E-mail</label>
+                <input type="email" th:field="*{email}" class="form-control" id="email" placeholder="Digite seu e-mail">
+                <span th:if="${erro_email}" th:text="${erro_email}" class="error-message"></span>
+            </div>
+
+            <!-- SENHA -->
+            <div class="form-group">
+                <label for="password">Senha</label>
+                <input type="password" th:field="*{senha}" class="form-control" id="password" placeholder="Digite sua senha">
+                <span th:if="${#fields.hasErrors('senha')}" th:errors="*{senha}" class="error-message"></span>
+            </div>
+
+            <!-- CONFIRMAR SENHA -->
+            <div class="form-group">
+                <label for="confirmPassword">Confirme sua senha</label>
+                <input type="password" name="confirmaSenha" class="form-control" id="confirmPassword" placeholder="Confirme sua senha">
+            </div>
+
+            <button type="submit" class="btn-primary">Cadastrar</button>
+            <a th:href="@{/login}">Voltar ao Login</a>
+        </form>
+    </div>
+
+</body>
 </html>

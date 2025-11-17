@@ -143,30 +143,42 @@ public class AnimalController {
 	// Lista apenas os animais do usuário logado
 	@GetMapping("/meus-animais")
 	public String listarMeusAnimais(Model model, HttpServletRequest request, RedirectAttributes attributes) throws UnsupportedEncodingException {
-		
-		String usuarioIdStr = cookieService.getCookie(request, "usuarioId");
-		String nomeUsuario = cookieService.getCookie(request, "nomeUsuario");
-		model.addAttribute("nome", nomeUsuario != null ? nomeUsuario : "Visitante");
-		
-		if (usuarioIdStr == null || usuarioIdStr.isEmpty()) {
-			attributes.addFlashAttribute("erro", "Sessão expirada. Faça login para ver seus animais.");
-			return "redirect:/login";
-		}
-		
-		try {
-			Long donoId = Long.parseLong(usuarioIdStr);
-			
-			// Esta chamada JÁ ESTÁ CORRETA (com JOIN FETCH do Repository)
-			List<Animal> meusAnimais = animalRepository.findByDonoId(donoId);
-			
-			model.addAttribute("animais", meusAnimais);
-			
-		} catch (NumberFormatException e) {
-			attributes.addFlashAttribute("erro", "Erro de sessão. Faça login novamente.");
-			return "redirect:/login";
-		}
-		
-		return "meus_animais"; // Nome correto do template
+	    
+	    String usuarioIdStr = cookieService.getCookie(request, "usuarioId");
+	    String nomeUsuario = cookieService.getCookie(request, "nomeUsuario");
+	    model.addAttribute("nome", nomeUsuario != null ? nomeUsuario : "Visitante");
+	    
+	    if (usuarioIdStr == null || usuarioIdStr.isEmpty()) {
+	        attributes.addFlashAttribute("erro", "Sessão expirada. Faça login para ver seus animais.");
+	        return "redirect:/login";
+	    }
+	    
+	    try {
+	        Long donoId = Long.parseLong(usuarioIdStr);
+	        
+	        // 1. Executa a consulta, que pode estar falhando devido ao JOIN FETCH
+	        List<Animal> meusAnimais = animalRepository.findByDonoId(donoId);
+	        
+	        // 2. SOLUÇÃO: Itera sobre a lista para forçar o carregamento LAZY de 'fotos'
+	        // Isso acessa a lista de fotos e dispara a query necessária enquanto a sessão está ativa.
+	        for (Animal animal : meusAnimais) {
+	            // Acessar o tamanho da coleção força a inicialização, evitando LazyInitializationException.
+	            animal.getFotos().size(); 
+	        }
+	        
+	        model.addAttribute("animais", meusAnimais);
+	        
+	    } catch (NumberFormatException e) {
+	        attributes.addFlashAttribute("erro", "Erro de sessão. Faça login novamente.");
+	        return "redirect:/login";
+	    } catch (Exception e) {
+	        // Captura o erro 500 de JPA/Hibernate e o loga.
+	        e.printStackTrace(); 
+	        attributes.addFlashAttribute("erro", "Erro ao carregar a lista de animais. Tente novamente.");
+	        return "redirect:/"; // Redireciona para a home em caso de falha grave
+	    }
+	    
+	    return "meus_animais";
 	}
 	
 	// Mostra os detalhes de um animal específico

@@ -1,198 +1,34 @@
-/* ======================== */
-/* ESTILO GERAL */
-/* ======================== */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: "Poppins", sans-serif;
-}
+/* static/css/home_meusanimais_style.css - Versão Revisada */
+@import url('base_uniform.css');
 
 body {
-  background-color: #f8f9fa;
-  color: #333;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
+    /* Reintroduzindo a imagem de fundo que você gosta */
+    background-image: url('../images/fundo_caderno.png'); /* Assuma o caminho para sua imagem */
+    background-repeat: repeat;
+    background-attachment: fixed; /* Opcional: Mantém a imagem fixa ao rolar */
+    background-color: #f0f0f0; /* Cor de fallback */
+    line-height: 1.6;
 }
 
-/* ======================== */
-/* CABEÇALHO SUPERIOR */
-/* ======================== */
-.navbar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background-color: #2e8b57;
-  color: #fff;
-  padding: 12px 24px;
-  font-weight: 600;
-  font-size: 1.1rem;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+/* Cards e Navbar devem ter fundo sólido para destacar sobre o fundo do body */
+
+.navbar-top {
+    /* Mantém a navbar sólida (cor-primaria) */
+    background-color: var(--cor-primaria);
+    color: white;
+    padding: 10px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Sombra para destacar */
 }
 
-.navbar a {
-  color: #fff;
-  text-decoration: none;
-  transition: opacity 0.3s;
+/* Card dos animais (Home e Meus Animais) */
+.animal-card, .animal-item, .sidebar-filtros {
+    background-color: var(--cor-fundo-card); /* Fundo branco sólido */
+    border-radius: var(--radius-borda);
+    box-shadow: var(--sombra-card);
+    overflow: hidden;
 }
 
-.navbar a:hover {
-  opacity: 0.8;
-}
-
-/* ======================== */
-/* BANNER DO ANIMAL */
-/* ======================== */
-.banner-container {
-  position: relative;
-  width: 100%;
-  height: 280px;
-  overflow: hidden;
-  background: #ccc;
-}
-
-.banner-container img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  filter: brightness(90%);
-}
-
-.foto-perfil-animal {
-  position: absolute;
-  bottom: -45px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 90px;
-  height: 90px;
-  border-radius: 50%;
-  border: 4px solid #fff;
-  object-fit: cover;
-  box-shadow: 0 3px 10px rgba(0,0,0,0.3);
-  background-color: #fff;
-}
-
-/* ======================== */
-/* CONTEÚDO PRINCIPAL */
-/* ======================== */
-.conteudo {
-  flex: 1;
-  max-width: 850px;
-  margin: 70px auto 80px;
-  background-color: #fff;
-  border-radius: 16px;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.08);
-  overflow: hidden;
-}
-
-.conteudo-header {
-  padding: 25px;
-  border-bottom: 1px solid #e6e6e6;
-  text-align: center;
-}
-
-.conteudo-header h1 {
-  color: #2e8b57;
-  font-size: 1.8rem;
-  margin-bottom: 8px;
-}
-
-.conteudo-header .subinfo {
-  font-size: 0.95rem;
-  color: #777;
-}
-
-/* ======================== */
-/* FICHA RÁPIDA */
-/* ======================== */
-.ficha-rapida {
-  padding: 25px;
-  border-bottom: 1px solid #e6e6e6;
-}
-
-.ficha-rapida h2 {
-  font-size: 1.2rem;
-  color: #2e8b57;
-  margin-bottom: 10px;
-}
-
-.ficha-item {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin-bottom: 8px;
-  font-size: 0.95rem;
-}
-
-.ficha-item i {
-  color: #2e8b57;
-}
-
-/* ======================== */
-/* DESCRIÇÃO */
-/* ======================== */
-.descricao {
-  padding: 25px;
-}
-
-.descricao h2 {
-  font-size: 1.2rem;
-  color: #2e8b57;
-  margin-bottom: 10px;
-}
-
-.descricao p {
-  color: #555;
-  line-height: 1.6;
-  font-size: 0.95rem;
-}
-
-/* ======================== */
-/* BOTÃO FIXO DE ADOÇÃO */
-/* ======================== */
-.btn-adotar {
-  position: fixed;
-  bottom: 20px;
-  left: 50%;
-  transform: translateX(-50%);
-  background-color: #2e8b57;
-  color: #fff;
-  border: none;
-  border-radius: 30px;
-  padding: 16px 36px;
-  font-size: 1rem;
-  font-weight: 600;
-  cursor: pointer;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.25);
-  transition: background 0.3s, transform 0.2s;
-}
-
-.btn-adotar:hover {
-  background-color: #256d46;
-  transform: translateX(-50%) scale(1.03);
-}
-
-/* ======================== */
-/* RESPONSIVIDADE */
-/* ======================== */
-@media (max-width: 768px) {
-  .conteudo {
-    margin: 60px 15px 90px;
-  }
-
-  .banner-container {
-    height: 220px;
-  }
-
-  .foto-perfil-animal {
-    width: 75px;
-    height: 75px;
-    bottom: -38px;
-  }
-
-  .btn-adotar {
-    padding: 14px 28px;
-    font-size: 0.95rem;
-  }
-}
+/* O resto do CSS para layout de grid, botões e filtros é mantido */

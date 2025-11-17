@@ -37,17 +37,17 @@
         <label for="porte">Porte:</label>
         <select id="porte" th:field="*{porte}">
             <option value="">Selecione...</option>
-            <option>Pequeno</option>
-            <option>Médio</option>
-            <option>Grande</option>
+            <option value="pequeno">Pequeno</option>
+            <option value="medio">Médio</option>
+            <option value="grande">Grande</option>
         </select>
 
         <!-- SEXO -->
         <label for="sexo">Sexo:</label>
         <select id="sexo" th:field="*{sexo}">
             <option value="">Selecione...</option>
-            <option>Macho</option>
-            <option>Fêmea</option>
+            <option value="macho">Macho</option>
+            <option value="femea">Fêmea</option>
         </select>
 
         <!-- IDADE -->
@@ -57,8 +57,8 @@
         <!-- STATUS -->
         <label for="status">Status:</label>
         <select id="status" th:field="*{status}">
-            <option>Disponível</option>
-            <option>Adotado</option>
+            <option value="disponivel">Disponível</option>
+            <option value="adotado">Adotado</option>
         </select>
 
         <!-- DESCRIÇÃO -->

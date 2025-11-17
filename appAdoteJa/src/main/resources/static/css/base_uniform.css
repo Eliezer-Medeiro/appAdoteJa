@@ -1,0 +1,53 @@
+/* style.css (ou seu arquivo principal) */
+
+/* 1. Reset Global */
+* {
+    font-family: Arial, sans-serif; /* Uniformizar a fonte */
+    box-sizing: border-box;
+}
+
+/* 2. Cores (Variáveis de CSS para facilitar a manutenção) */
+:root {
+    --cor-primaria: #4c8c4a; /* Verde Escuro */
+    --cor-secundaria: #f4f4f4; /* Cinza Claro para fundos */
+    --cor-texto: #333;
+}
+
+/* 3. Fundo Padrão (Remova o fundo de desenho) */
+body {
+    background-color: var(--cor-secundaria); 
+    color: var(--cor-texto);
+}
+
+/* 4. Estilo de Botões Padrão */
+.btn-principal {
+    background-color: var(--cor-primaria);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px; /* Ajuste para o seu design */
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.btn-principal:hover {
+    background-color: #3b7138; /* Um tom um pouco mais escuro */
+}
+
+/* 5. Estilo de Cards (Para Home e Meus Animais) */
+.card-animal {
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra sutil */
+    padding: 15px;
+    margin: 15px;
+}
+
+/* 6. Inputs e Formulários */
+input[type="text"], input[type="email"], input[type="password"], select, textarea {
+    width: 100%;
+    padding: 10px;
+    margin: 8px 0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}

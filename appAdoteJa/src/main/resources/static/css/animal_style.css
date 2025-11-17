@@ -1,191 +1,309 @@
-/* Importação de fonte básica e reset */
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+/* ====================================
+   PÁGINA DE DETALHES DO ANIMAL
+   ==================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+:root {
+  --primary-green: #16a34a;
+  --primary-green-dark: #15803d;
+  --primary-green-light: #4ade80;
+  --background: #f9fafb;
+  --card-bg: #ffffff;
+  --text-dark: #1f2937;
+  --text-light: #6b7280;
+}
 
 * {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
 body {
-    font-family: 'Roboto', sans-serif;
-    background-color: #f4f7f6; /* Fundo levemente acinzentado */
-    color: #333;
-    line-height: 1.6;
+  font-family: 'Inter', sans-serif;
+  background-color: var(--background);
+  color: var(--text-dark);
+  line-height: 1.6;
 }
 
-/* ---------------------------------- */
-/* 1. Cabeçalho (Barra Superior) */
-/* ---------------------------------- */
+/* ====================================
+   HEADER
+   ==================================== */
+
 .app-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 15px;
-    background-color: #38761d; /* Verde escuro (cor da sua imagem de referência) */
-    color: white;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    position: sticky; /* Fixo no topo */
-    top: 0;
-    z-index: 100;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 1.5rem;
+  background: linear-gradient(135deg, var(--primary-green) 0%, var(--primary-green-dark) 100%);
+  color: white;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  position: sticky;
+  top: 0;
+  z-index: 100;
 }
 
 .app-header h3 {
-    font-size: 1.1em;
-    font-weight: 700;
+  font-size: 1.125rem;
+  font-weight: 700;
 }
 
 .app-header a {
-    color: white;
-    text-decoration: none;
-    display: flex;
-    align-items: center;
+  color: white;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  transition: all 0.2s;
 }
 
-/* ---------------------------------- */
-/* 2. Galeria de Imagens */
-/* ---------------------------------- */
+.app-header a:hover {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+/* ====================================
+   CONTAINER PRINCIPAL
+   ==================================== */
+
+.detail-container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem;
+}
+
+/* ====================================
+   GALERIA DE IMAGENS
+   ==================================== */
+
 .image-gallery {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  gap: 1rem;
   margin-bottom: 2rem;
 }
 
 .main-image {
   width: 100%;
-  height: 350px;
-  border-radius: 15px;
-  background-color: #e9ecef;
+  height: 450px;
+  border-radius: 20px;
+  background-color: #e5e7eb;
   background-size: cover;
   background-position: center;
-  margin-bottom: 10px;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+  transition: transform 0.3s;
+}
+
+.main-image:hover {
+  transform: scale(1.01);
 }
 
 .thumbnails {
   display: flex;
   justify-content: center;
-  gap: 10px;
+  gap: 1rem;
+  flex-wrap: wrap;
 }
 
 .thumbnail {
-  width: 70px;
-  height: 70px;
-  border-radius: 10px;
+  width: 80px;
+  height: 80px;
+  border-radius: 12px;
   background-size: cover;
   background-position: center;
   cursor: pointer;
-  transition: transform 0.2s ease;
+  transition: all 0.2s;
+  border: 3px solid transparent;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
 .thumbnail:hover {
   transform: scale(1.05);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
 .thumbnail.active {
-  border: 3px solid #007bff;
+  border-color: var(--primary-green);
+  transform: scale(1.05);
 }
 
+/* ====================================
+   INFORMAÇÕES DO ANIMAL
+   ==================================== */
 
-/* ---------------------------------- */
-/* 3. Cartão de Informações */
-/* ---------------------------------- */
 .info-card {
-    padding: 0 20px;
+  background: var(--card-bg);
+  border-radius: 20px;
+  padding: 2rem;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
 }
 
 .animal-name {
-    font-size: 2.2em;
-    color: #38761d; /* Destaque em verde */
-    margin-bottom: 5px;
+  font-size: 2.5rem;
+  color: var(--primary-green);
+  margin-bottom: 0.5rem;
+  font-weight: 800;
+  letter-spacing: -1px;
 }
 
 .animal-tagline {
-    font-style: italic;
-    color: #666;
-    margin-bottom: 20px;
-    font-size: 1em;
+  font-style: italic;
+  color: var(--text-light);
+  margin-bottom: 2rem;
+  font-size: 1.125rem;
 }
 
-/* Ficha Rápida */
+/* ====================================
+   FICHA RÁPIDA
+   ==================================== */
+
 .quick-facts {
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    padding: 15px;
-    margin-bottom: 20px;
-    background-color: white;
+  background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+  border-radius: 16px;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+  border: 2px solid #bbf7d0;
 }
 
-.quick-facts h2, .description h2 {
-    font-size: 1.3em;
-    color: #38761d;
-    margin-bottom: 10px;
-    border-bottom: 2px solid #e0e0e0;
-    padding-bottom: 5px;
+.quick-facts h2 {
+  font-size: 1.25rem;
+  color: var(--primary-green-dark);
+  margin-bottom: 1rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
 }
 
 .quick-facts ul {
-    list-style: none;
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
 }
 
 .quick-facts li {
-    display: flex;
-    align-items: center;
-    margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-weight: 500;
 }
 
 .quick-facts .material-icons {
-    color: #8fbc45; /* Ícones em verde claro */
-    margin-right: 10px;
-    font-size: 1.2em;
+  color: var(--primary-green);
+  font-size: 1.5rem;
+  background: white;
+  padding: 0.5rem;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
 }
 
-/* Descrição */
+/* ====================================
+   DESCRIÇÃO
+   ==================================== */
+
+.description {
+  margin-top: 2rem;
+}
+
+.description h2 {
+  font-size: 1.5rem;
+  color: var(--text-dark);
+  margin-bottom: 1rem;
+  font-weight: 700;
+  border-bottom: 3px solid var(--primary-green);
+  padding-bottom: 0.5rem;
+  display: inline-block;
+}
+
 .description p {
-    margin-bottom: 15px;
-    text-align: justify;
+  color: var(--text-light);
+  line-height: 1.8;
+  margin-bottom: 1rem;
+  text-align: justify;
 }
 
-/* Espaçador para o botão fixo */
+/* ====================================
+   BARRA DE AÇÃO FIXA
+   ==================================== */
+
 .spacer {
-    height: 80px; 
+  height: 100px;
 }
 
-
-/* ---------------------------------- */
-/* 4. Barra de Ação Fixo (Rodapé) */
-/* ---------------------------------- */
 .fixed-action-bar {
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-    padding: 15px 20px;
-    background-color: white;
-    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
-    z-index: 99;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 1.25rem;
+  background: white;
+  box-shadow: 0 -4px 16px rgba(0, 0, 0, 0.1);
+  z-index: 99;
+  backdrop-filter: blur(10px);
+}
+
+.fixed-action-bar .container {
+  max-width: 900px;
+  margin: 0 auto;
 }
 
 .chat-button {
-    width: 100%;
-    background-color: #38761d; /* O verde forte para o botão de ação */
-    color: white;
-    border: none;
-    border-radius: 50px;
-    padding: 15px;
-    font-size: 1.1em;
-    font-weight: bold;
-    cursor: pointer;
-    transition: background-color 0.3s;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.chat-button .material-icons {
-    margin-right: 8px;
+  width: 100%;
+  background: linear-gradient(135deg, var(--primary-green) 0%, var(--primary-green-dark) 100%);
+  color: white;
+  border: none;
+  border-radius: 16px;
+  padding: 1.125rem;
+  font-size: 1.125rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.75rem;
+  box-shadow: 0 4px 16px rgba(22, 163, 74, 0.4);
 }
 
 .chat-button:hover {
-    background-color: #2a5a14;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(22, 163, 74, 0.5);
+}
+
+.chat-button:active {
+  transform: translateY(0);
+}
+
+.chat-button .material-icons {
+  font-size: 1.5rem;
+}
+
+/* ====================================
+   RESPONSIVO
+   ==================================== */
+
+@media (max-width: 768px) {
+  .detail-container {
+    padding: 1rem;
+  }
+  
+  .main-image {
+    height: 300px;
+    border-radius: 16px;
+  }
+  
+  .animal-name {
+    font-size: 2rem;
+  }
+  
+  .info-card {
+    padding: 1.5rem;
+  }
+  
+  .quick-facts ul {
+    grid-template-columns: 1fr;
+  }
 }

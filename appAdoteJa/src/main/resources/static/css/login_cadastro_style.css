@@ -1,60 +1,289 @@
 /* static/css/login_cadastro_style.css - Versão Revisada */
 @import url('base_uniform.css');
 
-body {
-    /* Fundo da página: Cor clara, sem o gradiente complexo, para ser uniforme */
-    background-color: var(--cor-secundaria); 
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 20px;
+/* ====================================
+   LOGIN PAGE - AdoteJá
+   ==================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+
+:root {
+  --primary-green: #16a34a;
+  --primary-green-dark: #15803d;
+  --primary-green-light: #22c55e;
+  --background: #f9fafb;
+  --card-bg: #ffffff;
+  --text-dark: #1f2937;
+  --text-light: #6b7280;
+  --border: #e5e7eb;
+  --shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+  --shadow-lg: 0 20px 40px rgba(0, 0, 0, 0.12);
 }
 
-/* Container principal (que engloba a imagem e o form no login/cadastro) */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body, html {
+  height: 100%;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+}
+
+/* ====================================
+   CONTAINER PRINCIPAL
+   ==================================== */
+
 .container {
-    display: flex;
-    max-width: 800px; /* Aumenta um pouco para caber a imagem */
-    width: 100%;
-    box-shadow: var(--sombra-card);
-    border-radius: var(--radius-borda);
-    overflow: hidden; /* Garante que a borda arredondada funcione */
-    background-color: var(--cor-fundo-card);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  max-width: 1100px;
+  gap: 4rem;
+  animation: fadeInUp 0.6s ease-out;
 }
 
-/* Área da Imagem (Dog/Cat) */
-.pet-imageDog {
-    flex: 1; /* Ocupa metade do espaço */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: #e8f5e9; /* Fundo verde claro para destacar a imagem */
-    padding: 20px;
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
-.pet-imageDog img {
-    max-width: 100%;
-    height: auto;
-    /* Linha removida: display: none; */ 
-}
+/* ====================================
+   TÍTULO PRINCIPAL
+   ==================================== */
 
-/* Área do Formulário (Login/Cadastro) */
 .login-wrapper {
-    flex: 1; /* Ocupa a outra metade do espaço */
-    padding: 40px;
-    text-align: center;
-    background-color: var(--cor-fundo-card); /* Fundo branco */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
 }
 
-/* Aplicar o mesmo estilo de card no cadastro.html */
-.register-container {
-    max-width: 800px;
-    width: 100%;
-    margin: 0 auto;
-    padding: 40px;
-    background-color: var(--cor-fundo-card);
-    box-shadow: var(--sombra-card);
-    border-radius: var(--radius-borda);
+.titulo {
+  color: var(--primary-green);
+  font-size: clamp(3rem, 8vw, 5rem);
+  font-weight: 900;
+  text-align: center;
+  letter-spacing: -2px;
+  text-shadow: 0 4px 12px rgba(22, 163, 74, 0.15);
+  background: linear-gradient(135deg, #15803d 0%, #22c55e 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
-/* O resto do CSS de formulário e botões é herdado de base_uniform.css */
+/* ====================================
+   CAIXA DE LOGIN
+   ==================================== */
+
+.login-box {
+  background: var(--card-bg);
+  padding: 3rem;
+  border-radius: 24px;
+  box-shadow: var(--shadow-lg);
+  width: 100%;
+  max-width: 420px;
+  position: relative;
+  overflow: hidden;
+}
+
+.login-box::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--primary-green) 0%, var(--primary-green-light) 100%);
+}
+
+/* ====================================
+   FORMULÁRIO
+   ==================================== */
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.form-label {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--text-dark);
+  margin-left: 0.25rem;
+}
+
+.input-field {
+  width: 100%;
+  padding: 0.875rem 1rem;
+  border: 2px solid var(--border);
+  border-radius: 12px;
+  background-color: var(--background);
+  color: var(--text-dark);
+  font-size: 1rem;
+  font-family: inherit;
+  transition: all 0.2s ease;
+}
+
+.input-field:focus {
+  outline: none;
+  border-color: var(--primary-green);
+  background-color: white;
+  box-shadow: 0 0 0 4px rgba(22, 163, 74, 0.1);
+}
+
+.input-field::placeholder {
+  color: var(--text-light);
+  font-weight: 400;
+}
+
+/* ====================================
+   BOTÕES
+   ==================================== */
+
+.login-button {
+  padding: 1rem 2rem;
+  background: linear-gradient(135deg, var(--primary-green) 0%, var(--primary-green-dark) 100%);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(22, 163, 74, 0.3);
+  margin-top: 0.5rem;
+}
+
+.login-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(22, 163, 74, 0.4);
+}
+
+.login-button:active {
+  transform: translateY(0);
+}
+
+/* Link de cadastro */
+.signup-link {
+  text-align: center;
+  margin-top: 1rem;
+  font-size: 0.9rem;
+  color: var(--text-light);
+}
+
+.signup-link a {
+  color: var(--primary-green);
+  font-weight: 600;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.signup-link a:hover {
+  color: var(--primary-green-dark);
+  text-decoration: underline;
+}
+
+/* ====================================
+   IMAGENS DOS PETS
+   ==================================== */
+
+.pet-image {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.pet-imageDog,
+.pet-imageCat {
+  width: 350px;
+  height: 350px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: visible;
+  filter: drop-shadow(0 15px 30px rgba(0, 0, 0, 0.15));
+}
+
+.pet-imageCat {
+  height: 450px;
+}
+
+.pet-imageDog img,
+.pet-imageCat img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.pet-imageDog img:hover,
+.pet-imageCat img:hover {
+  transform: scale(1.08) rotate(2deg);
+}
+
+/* ====================================
+   RESPONSIVO
+   ==================================== */
+
+@media (max-width: 968px) {
+  .container {
+    flex-direction: column;
+    gap: 2rem;
+  }
+  
+  .pet-imageDog,
+  .pet-imageCat {
+    width: 250px;
+    height: 250px;
+  }
+  
+  .pet-imageCat {
+    height: 300px;
+  }
+  
+  .titulo {
+    font-size: 3.5rem;
+  }
+  
+  .login-box {
+    padding: 2rem;
+  }
+}
+
+@media (max-width: 480px) {
+  body, html {
+    padding: 1rem;
+  }
+  
+  .titulo {
+    font-size: 2.5rem;
+  }
+  
+  .login-box {
+    padding: 1.5rem;
+  }
+}
+

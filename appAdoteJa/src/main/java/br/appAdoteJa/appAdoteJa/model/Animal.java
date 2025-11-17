@@ -79,8 +79,8 @@ public class Animal {
     public void setFotos(List<Foto> fotos) { this.fotos = fotos; }
 
     public String getStatus() {
-        return status;
-    }
+        return (status == null || status.isBlank()) ? "Disponível" : status;
+}
 
     public void setStatus(String status) {
         this.status = status;

@@ -259,6 +259,42 @@ public class AnimalController {
 	}
 
 	
+	@PostMapping("/marcar-adotado/{id}")
+	public String marcarComoAdotado(
+	        @PathVariable Long id,
+	        RedirectAttributes ra,
+	        HttpServletRequest request) throws UnsupportedEncodingException {
+	
+	    String usuarioIdStr = cookieService.getCookie(request, "usuarioId");
+	    if (usuarioIdStr == null) {
+	        ra.addFlashAttribute("erro", "Sessão expirada. Faça login novamente.");
+	        return "redirect:/login";
+	    }
+	
+	    Long usuarioId = Long.parseLong(usuarioIdStr);
+	
+	    Animal animal = animalRepository.findById(id).orElse(null);
+	
+	    if (animal == null) {
+	        ra.addFlashAttribute("erro", "Animal não encontrado!");
+	        return "redirect:/animais/meus-animais";
+	    }
+	
+	    // Segurança: verificar se o animal pertence ao usuário logado
+	    if (!animal.getDono().getId().equals(usuarioId)) {
+	        ra.addFlashAttribute("erro", "Você não tem permissão para alterar este animal!");
+	        return "redirect:/animais/meus-animais";
+	    }
+	
+	    animal.setStatus("Adotado");
+	    animalRepository.save(animal);
+	
+	    ra.addFlashAttribute("sucesso", "Status atualizado para 'Adotado'!");
+	
+	    return "redirect:/animais/meus-animais";
+	}
+		
+	
 	// Mostra os detalhes de um animal específico
 	@GetMapping("/detalhes/{id}")
 	public String detalhesAnimal(@PathVariable Long id, Model model, RedirectAttributes attributes, HttpServletRequest request) throws UnsupportedEncodingException {

@@ -194,6 +194,30 @@ public class AnimalController {
 	    return "editar_animal"; // nome do HTML
 	}
 
+	@PostMapping("/editar/{id}")
+	public String salvarEdicao(@PathVariable Long id, @ModelAttribute Animal animalAtualizado, RedirectAttributes ra) {
+	    Animal animal = animalRepository.findById(id).orElse(null);
+	
+	    if (animal == null) {
+	        ra.addFlashAttribute("erro", "Animal não encontrado!");
+	        return "redirect:/animais/meus-animais";
+	    }
+	
+	    animal.setNome(animalAtualizado.getNome());
+	    animal.setRaca(animalAtualizado.getRaca());
+	    animal.setEspecie(animalAtualizado.getEspecie());
+	    animal.setSexo(animalAtualizado.getSexo());
+	    animal.setPorte(animalAtualizado.getPorte());
+	    animal.setIdade(animalAtualizado.getIdade());
+	    animal.setDescricao(animalAtualizado.getDescricao());
+	    animal.setStatus(animalAtualizado.getStatus());
+	
+	    animalRepository.save(animal);
+	    ra.addFlashAttribute("sucesso", "Animal atualizado com sucesso!");
+	
+	    return "redirect:/animais/meus-animais";
+	}
+
 	
 	// Mostra os detalhes de um animal específico
 	@GetMapping("/detalhes/{id}")

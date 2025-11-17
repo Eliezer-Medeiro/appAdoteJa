@@ -32,6 +32,7 @@ import br.appAdoteJa.appAdoteJa.repository.UsuarioRepository;
 import br.appAdoteJa.appAdoteJa.service.CookieService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
+import org.springframework.web.bind.annotation.ModelAttribute;
 
 @Controller
 @RequestMapping("/animais")

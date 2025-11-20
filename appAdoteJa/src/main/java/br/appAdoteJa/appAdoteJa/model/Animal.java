@@ -27,7 +27,7 @@ public class Animal {
     
     private String sexo;
 
-    private int idade;
+    private String idade;
     
     private String status = "Disponível";
 

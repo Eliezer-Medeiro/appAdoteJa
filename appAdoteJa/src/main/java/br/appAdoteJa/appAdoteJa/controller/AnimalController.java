@@ -38,18 +38,23 @@ public class AnimalController {
     // HOME COM FILTROS
     // ============================
     @GetMapping("/")
-   @GetMapping("/")
     public String listarAnimais(
-            // Usar defaultValue="" garante que o valor nunca será null, 
-            @RequestParam(required = false, defaultValue = "") String especie, 
-            @RequestParam(required = false, defaultValue = "") String sexo,
-            @RequestParam(required = false, defaultValue = "") String porte,
+            @RequestParam(required = false) String especie,
+            @RequestParam(required = false) String sexo,
+            @RequestParam(required = false) String porte,
             Model model,
             HttpServletRequest request
-    ) {
+    ) throws UnsupportedEncodingException { 
 
-        model.addAttribute("animais", animalService.filtrar(especie, sexo, porte));
-        model.addAttribute("nome", request.getAttribute("nome"));
+        String usuarioIdStr = cookieService.getCookie(request, "usuarioId"); // Obtém o ID do usuário logado
+        Long donoId = (usuarioIdStr != null) ? Long.parseLong(usuarioIdStr) : null;
+        
+        // Se o usuário não estiver logado, nomeUsuario pode ser Visitante.
+        String nomeUsuario = cookieService.getCookie(request, "nomeUsuario");
+        model.addAttribute("nome", nomeUsuario != null ? nomeUsuario : "Visitante");
+
+        
+        model.addAttribute("animais", animalService.filtrar(especie, sexo, porte, donoId));
 
         return "home";
     }

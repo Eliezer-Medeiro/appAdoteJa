@@ -68,5 +68,27 @@
     </button>
 </footer>
 
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        
+        const mainImage = document.querySelector(".main-image");
+        const thumbnails = document.querySelectorAll(".thumbnail");
+    
+        thumbnails.forEach(thumb => {
+            thumb.addEventListener("click", () => {
+    
+                // Remove classe 'active' das outras miniaturas
+                thumbnails.forEach(t => t.classList.remove("active"));
+                thumb.classList.add("active");
+    
+                // Troca a imagem principal
+                const bg = thumb.style.backgroundImage;
+                mainImage.style.backgroundImage = bg;
+            });
+        });
+    
+    });
+</script>
+
 </body>
 </html>

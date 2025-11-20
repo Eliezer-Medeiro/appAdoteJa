@@ -38,10 +38,12 @@ public class AnimalController {
     // HOME COM FILTROS
     // ============================
     @GetMapping("/")
+   @GetMapping("/")
     public String listarAnimais(
-            @RequestParam(required = false) String especie,
-            @RequestParam(required = false) String sexo,
-            @RequestParam(required = false) String porte,
+            // Usar defaultValue="" garante que o valor nunca será null, 
+            @RequestParam(required = false, defaultValue = "") String especie, 
+            @RequestParam(required = false, defaultValue = "") String sexo,
+            @RequestParam(required = false, defaultValue = "") String porte,
             Model model,
             HttpServletRequest request
     ) {

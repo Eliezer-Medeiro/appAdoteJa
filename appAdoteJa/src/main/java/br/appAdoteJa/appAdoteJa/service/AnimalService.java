@@ -47,8 +47,8 @@ public class AnimalService {
     // ============================
     // FILTRAR
     // ============================
-    public List<Animal> filtrar(String especie, String sexo, String porte) {
-        return animalRepository.filtrar(especie, sexo, porte);
+    public List<Animal> filtrar(String especie, String sexo, String porte, Long donoId) {
+        return animalRepository.filtrar(especie, sexo, porte, donoId);
     }
 
     // ============================

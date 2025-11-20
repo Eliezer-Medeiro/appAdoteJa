@@ -21,4 +21,16 @@ public interface AnimalRepository extends JpaRepository<Animal, Long> {
 
 	@Query("SELECT DISTINCT a FROM Animal a LEFT JOIN FETCH a.fotos WHERE a.dono.id = :donoId")
 	List<Animal> findByDonoId(@Param("donoId") Long donoId);
+
+	@Query("""
+    SELECT a FROM Animal a
+    WHERE (:especie IS NULL OR :especie = '' OR a.especie = :especie)
+      AND (:sexo IS NULL OR :sexo = '' OR a.sexo = :sexo)
+      AND (:porte IS NULL OR :porte = '' OR a.porte = :porte)
+""")
+List<Animal> filtrar(
+        @Param("especie") String especie,
+        @Param("sexo") String sexo,
+        @Param("porte") String porte
+);
 }

@@ -19,51 +19,63 @@
 
     <h2>Editar Informações do Animal</h2>
 
-    <form th:action="@{/animais/editar/{id}(id=${animal.id})}" method="post" th:object="${animal}">
+    <form th:action="@{/animais/editar/{id}(id=${animal.id})}" 
+          th:object="${animal}" 
+          method="post"
+          enctype="multipart/form-data">
 
         <!-- NOME -->
-        <label for="nome">Nome:</label>
+        <label for="nome">Nome do Animal:</label>
         <input type="text" id="nome" th:field="*{nome}" required>
+
+        <!-- ESPÉCIE -->
+        <label for="especie">Espécie:</label>
+        <select id="especie" th:field="*{especie}" required>
+            <option value="">Selecione</option>
+            <option value="Cachorro">Cachorro</option>
+            <option value="Gato">Gato</option>
+            <option value="Aves">Aves</option>
+            <option value="Roedor">Roedor</option>
+            <option value="Outro">Outro</option>
+        </select>
 
         <!-- RAÇA -->
         <label for="raca">Raça:</label>
         <input type="text" id="raca" th:field="*{raca}" required>
 
-        <!-- ESPÉCIE -->
-        <label for="especie">Espécie:</label>
-        <input type="text" id="especie" th:field="*{especie}" required>
-
-        <!-- PORTE -->
-        <label for="porte">Porte:</label>
-        <select id="porte" th:field="*{porte}">
-            <option value="">Selecione...</option>
-            <option value="pequeno">Pequeno</option>
-            <option value="medio">Médio</option>
-            <option value="grande">Grande</option>
-        </select>
-
         <!-- SEXO -->
         <label for="sexo">Sexo:</label>
-        <select id="sexo" th:field="*{sexo}">
-            <option value="">Selecione...</option>
-            <option value="macho">Macho</option>
-            <option value="femea">Fêmea</option>
+        <select id="sexo" th:field="*{sexo}" required>
+            <option value="">Selecione</option>
+            <option value="Macho">Macho</option>
+            <option value="Fêmea">Fêmea</option>
         </select>
 
         <!-- IDADE -->
         <label for="idade">Idade (anos):</label>
-        <input type="number" id="idade" th:field="*{idade}" min="0" max="30">
+        <input type="number" id="idade" th:field="*{idade}" min="0" required>
 
         <!-- STATUS -->
         <label for="status">Status:</label>
         <select id="status" th:field="*{status}">
             <option value="Disponível">Disponível</option>
-            <option value="adotado">Adotado</option>
+            <option value="Adotado">Adotado</option>
         </select>
 
         <!-- DESCRIÇÃO -->
-        <label for="descricao">Descrição:</label>
-        <textarea id="descricao" th:field="*{descricao}" rows="4" placeholder="Informações adicionais sobre o animal..."></textarea>
+        <label for="descricao">Descrição e Histórico:</label>
+        <textarea id="descricao" th:field="*{descricao}" rows="4" required></textarea>
+
+        <!-- FOTOS -->
+        <label for="fotosUpload">Adicionar novas fotos (opcional):</label>
+        <input type="file" id="fotosUpload" name="fotosUpload" accept="image/*" multiple>
+
+        <h3>Fotos atuais:</h3>
+        <div class="foto-lista">
+            <div th:each="foto : ${animal.fotos}">
+                <img th:src="@{${foto.caminho}}" class="preview-foto">
+            </div>
+        </div>
 
         <button type="submit" class="btn-save">Salvar Alterações</button>
     </form>

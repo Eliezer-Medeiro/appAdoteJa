@@ -56,7 +56,7 @@ public class AnimalService {
 
                 // 3. Cria objeto Foto
                 Foto foto = new Foto();
-                foto.setCaminho(url);
+                foto.setUrl(url);
                 foto.setAnimal(animalSalvo);
 
                 // 4. Salva no banco

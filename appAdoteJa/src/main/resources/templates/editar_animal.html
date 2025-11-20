@@ -73,9 +73,10 @@
         <h3>Fotos atuais:</h3>
         <div class="foto-lista">
             <div th:each="foto : ${animal.fotos}">
-                <img th:src="@{${foto.caminho}}" class="preview-foto">
+                <img th:src="@{${foto.url}}" class="preview-foto">
             </div>
         </div>
+
 
         <button type="submit" class="btn-save">Salvar Alterações</button>
     </form>

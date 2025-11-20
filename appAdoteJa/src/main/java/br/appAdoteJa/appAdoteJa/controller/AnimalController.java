@@ -53,6 +53,21 @@ public class AnimalController {
 	
 	@Autowired
 	private CookieService cookieService;
+
+	@GetMapping("/")
+	public String listarAnimais(
+	        @RequestParam(required = false) String especie,
+	        @RequestParam(required = false) String sexo,
+	        @RequestParam(required = false) String porte,
+	        Model model, HttpServletRequest request) {
+	
+	    List<Animal> animais = animalService.filtrar(especie, sexo, porte);
+	
+	    model.addAttribute("animais", animais);
+	    
+	    return "home";
+	}
+
 	
 	// Página de cadastro de novo animal
 	@GetMapping("/cadastro-animal")

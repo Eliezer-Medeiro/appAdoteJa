@@ -31,10 +31,10 @@ public interface AnimalRepository extends JpaRepository<Animal, Long> {
       AND (:porte IS NULL OR :porte = '' OR a.porte = :porte)
       
 
-      AND (:idade IS NULL OR :idade = '' OR 
-           (:idade = 'filhote' AND a.idade <= 1) OR
-           (:idade = 'adulto' AND a.idade > 1 AND a.idade <= 8) OR
-           (:idade = 'idoso' AND a.idade > 8))
+      AND (:idade IS NULL OR 
+           (:idade = 'filhote') OR
+           (:idade = 'adulto') OR
+           (:idade = 'idoso' ))
     """)
     List<Animal> filtrar(
         @Param("especie") String especie,

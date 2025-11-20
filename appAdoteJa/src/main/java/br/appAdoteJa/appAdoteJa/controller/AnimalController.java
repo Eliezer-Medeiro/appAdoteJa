@@ -59,12 +59,17 @@ public class AnimalController {
 	        @RequestParam(required = false) String especie,
 	        @RequestParam(required = false) String sexo,
 	        @RequestParam(required = false) String porte,
-	        Model model, HttpServletRequest request) {
+	        Model model,
+	        HttpServletRequest request
+	) {
 	
-	    List<Animal> animais = animalService.filtrar(especie, sexo, porte);
+	    List<Animal> animais = animalRepository.filtrar(especie, sexo, porte);
 	
 	    model.addAttribute("animais", animais);
-	    
+	
+	    // nome do usuário no header, se você usa isso na home
+	    model.addAttribute("nome", request.getAttribute("nome"));
+	
 	    return "home";
 	}
 

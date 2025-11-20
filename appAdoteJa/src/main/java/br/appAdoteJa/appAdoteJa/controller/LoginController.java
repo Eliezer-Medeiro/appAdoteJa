@@ -9,6 +9,8 @@ import br.appAdoteJa.appAdoteJa.model.Usuario;
 import br.appAdoteJa.appAdoteJa.repository.AnimalRepository;
 import br.appAdoteJa.appAdoteJa.repository.UsuarioRepository;
 import br.appAdoteJa.appAdoteJa.service.CookieService;
+import br.appAdoteJa.appAdoteJa.service.AnimalService;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

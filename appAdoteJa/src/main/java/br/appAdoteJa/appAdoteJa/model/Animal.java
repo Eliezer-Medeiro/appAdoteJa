@@ -63,7 +63,7 @@ public class Animal {
     public String getSexo() { return sexo; }
     public void setSexo(String sexo) { this.sexo = sexo; }
 
-    public int getIdade() { return idade; }
+    public String getIdade() { return idade; }
     public void setIdade(String idade) { this.idade = idade; }
 
     public String getDescricao() { return descricao; }

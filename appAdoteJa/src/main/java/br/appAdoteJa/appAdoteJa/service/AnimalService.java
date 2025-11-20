@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import br.appAdoteJa.appAdoteJa.model.Animal;
 import br.appAdoteJa.appAdoteJa.model.Foto;
@@ -51,16 +52,23 @@ public class AnimalService {
     }
 
     // ============================
-    // SALVAR ANIMAL COM MULTIPLAS FOTOS
+    // SALVAR ANIMAL COM MULTIPLAS FOTOS (CORRIGIDO)
     // ============================
-    public void salvarAnimalComFotos(Animal animal, List<String> urlsFotos) {
+    public void salvarAnimalComFotos(Animal animal, List<MultipartFile> arquivosFotos) {
 
         List<Foto> fotos = new ArrayList<>();
 
-        for (String url : urlsFotos) {
-            Foto foto = new Foto(url);
-            foto.setAnimal(animal);
-            fotos.add(foto);
+        for (MultipartFile arquivo : arquivosFotos) {
+            if (!arquivo.isEmpty()) {
+
+                // por enquanto salva apenas o nome do arquivo
+                String caminho = "/uploads/" + arquivo.getOriginalFilename();
+
+                Foto foto = new Foto(caminho);
+                foto.setAnimal(animal);
+
+                fotos.add(foto);
+            }
         }
 
         animal.setFotos(fotos);
@@ -69,9 +77,9 @@ public class AnimalService {
     }
 
     // ============================
-    // ADICIONAR FOTOS A UM ANIMAL EXISTENTE
+    // ADICIONAR FOTOS EM UM ANIMAL EXISTENTE
     // ============================
-    public void adicionarFotos(Long animalId, List<String> novasUrls) {
+    public void adicionarFotos(Long animalId, List<MultipartFile> arquivosFotos) {
 
         Animal animal = buscarPorId(animalId);
 
@@ -79,24 +87,30 @@ public class AnimalService {
             animal.setFotos(new ArrayList<>());
         }
 
-        for (String url : novasUrls) {
-            Foto foto = new Foto(url);
-            foto.setAnimal(animal);
-            animal.getFotos().add(foto);
+        for (MultipartFile arquivo : arquivosFotos) {
+            if (!arquivo.isEmpty()) {
+
+                String caminho = "/uploads/" + arquivo.getOriginalFilename();
+
+                Foto foto = new Foto(caminho);
+                foto.setAnimal(animal);
+
+                animal.getFotos().add(foto);
+            }
         }
 
         animalRepository.save(animal);
     }
 
     // ============================
-    // LISTAR POR STATUS (ex: disponíveis)
+    // LISTAR POR STATUS
     // ============================
     public List<Animal> listarPorStatus(String status) {
         return animalRepository.findByStatus(status);
     }
 
     // ============================
-    // HOME: status + não mostrar do dono
+    // HOME: status + excluir dono
     // ============================
     public List<Animal> listarPorStatusExcluindoDono(String status, Long donoId) {
         return animalRepository.findByStatusAndDonoIdNot(status, donoId);

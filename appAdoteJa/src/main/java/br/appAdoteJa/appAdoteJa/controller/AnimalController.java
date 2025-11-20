@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.List;
 
@@ -107,12 +106,8 @@ public class AnimalController {
 
         animal.setDono(dono);
 
-        try {
-            animalService.salvarAnimalComFotos(animal, fotosUpload);
-        } catch (IOException e) {
-            ra.addFlashAttribute("erro", "Erro ao fazer upload das fotos.");
-            return "redirect:/animais/cadastro-animal";
-        }
+        // ⚠️ Agora o método recebe List<MultipartFile>, não List<String>
+        animalService.salvarAnimalComFotos(animal, fotosUpload);
 
         ra.addFlashAttribute("sucesso", "Animal cadastrado com sucesso!");
         return "redirect:/animais/meus-animais";

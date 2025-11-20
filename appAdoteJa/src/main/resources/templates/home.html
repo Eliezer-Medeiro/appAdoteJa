@@ -31,49 +31,48 @@
   <main class="main-layout">
 
     <!-- FILTROS LATERAIS -->
-    <aside class="sidebar-filtros">
-      <h2>Filtrar Animais</h2>
-
+    <form method="get" th:action="@{/}">
       <div class="filtro">
-        <label for="especie">Espécie</label>
-        <select id="especie" name="especie">
-          <option value="">Todas</option>
-          <option value="cachorro">Cachorro</option>
-          <option value="gato">Gato</option>
-          <option value="ave">Ave</option>
-          <option value="roedor">Roedor</option>         
-        </select>
+          <label>Espécie</label>
+          <select name="especie">
+              <option value="">Todas</option>
+              <option value="Cachorro">Cachorro</option>
+              <option value="Gato">Gato</option>
+          </select>
       </div>
-
+  
       <div class="filtro">
-        <label for="genero">Gênero</label>
-        <select id="genero">
-          <option value="">Todos</option>
-          <option value="macho">Macho</option>
-          <option value="femea">Fêmea</option>
-        </select>
+          <label>Gênero</label>
+          <select name="sexo">
+              <option value="">Todos</option>
+              <option value="Macho">Macho</option>
+              <option value="Femea">Fêmea</option>
+          </select>
       </div>
-
+  
       <div class="filtro">
-        <label for="idade">Idade</label>
-        <select id="idade">
-          <option value="">Todas</option>
-          <option value="filhote">Filhote</option>
-          <option value="adulto">Adulto</option>
-          <option value="idoso">Idoso</option>
-        </select>
+          <label>Idade</label>
+          <select name="idade">
+              <option value="">Todas</option>
+              <option value="filhote">Filhote</option>
+              <option value="adulto">Adulto</option>
+              <option value="idoso">Idoso</option>
+          </select>
       </div>
-
+  
       <div class="filtro">
-        <label for="porte">Porte</label>
-        <select id="porte">
-          <option value="">Todos</option>
-          <option value="pequeno">Pequeno</option>
-          <option value="medio">Médio</option>
-          <option value="grande">Grande</option>
-        </select>
+          <label>Porte</label>
+          <select name="porte">
+              <option value="">Todos</option>
+              <option value="pequeno">Pequeno</option>
+              <option value="medio">Médio</option>
+              <option value="grande">Grande</option>
+          </select>
       </div>
-    </aside>
+  
+      <button type="submit">Filtrar</button>
+   </form>
+
 
     <!-- GALERIA DE ANIMAIS -->
     <section class="conteudo-principal">

@@ -31,47 +31,49 @@
   <main class="main-layout">
 
     <!-- FILTROS LATERAIS -->
-    <form method="get" th:action="@{/}">
-      <div class="filtro">
-          <label>Espécie</label>
-          <select name="especie">
-              <option value="">Todas</option>
-              <option value="Cachorro">Cachorro</option>
-              <option value="Gato">Gato</option>
-          </select>
-      </div>
-  
-      <div class="filtro">
-          <label>Gênero</label>
-          <select name="sexo">
-              <option value="">Todos</option>
-              <option value="Macho">Macho</option>
-              <option value="Femea">Fêmea</option>
-          </select>
-      </div>
-  
-      <div class="filtro">
-          <label>Idade</label>
-          <select name="idade">
-              <option value="">Todas</option>
-              <option value="filhote">Filhote</option>
-              <option value="adulto">Adulto</option>
-              <option value="idoso">Idoso</option>
-          </select>
-      </div>
-  
-      <div class="filtro">
-          <label>Porte</label>
-          <select name="porte">
-              <option value="">Todos</option>
-              <option value="pequeno">Pequeno</option>
-              <option value="medio">Médio</option>
-              <option value="grande">Grande</option>
-          </select>
-      </div>
-  
-      <button type="submit">Filtrar</button>
-   </form>
+    <fieldset>
+      <form method="get" th:action="@{/}">
+        <div class="filtro">
+            <label>Espécie</label>
+            <select name="especie">
+                <option value="">Todas</option>
+                <option value="Cachorro">Cachorro</option>
+                <option value="Gato">Gato</option>
+            </select>
+        </div>
+    
+        <div class="filtro">
+            <label>Gênero</label>
+            <select name="sexo">
+                <option value="">Todos</option>
+                <option value="Macho">Macho</option>
+                <option value="Femea">Fêmea</option>
+            </select>
+        </div>
+    
+        <div class="filtro">
+            <label>Idade</label>
+            <select name="idade">
+                <option value="">Todas</option>
+                <option value="filhote">Filhote</option>
+                <option value="adulto">Adulto</option>
+                <option value="idoso">Idoso</option>
+            </select>
+        </div>
+    
+        <div class="filtro">
+            <label>Porte</label>
+            <select name="porte">
+                <option value="">Todos</option>
+                <option value="pequeno">Pequeno</option>
+                <option value="medio">Médio</option>
+                <option value="grande">Grande</option>
+            </select>
+        </div>
+    
+        <button type="submit">Filtrar</button>
+      </form>
+    </fieldset>
 
 
     <!-- GALERIA DE ANIMAIS -->

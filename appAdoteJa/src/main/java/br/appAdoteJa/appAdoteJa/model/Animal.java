@@ -64,7 +64,7 @@ public class Animal {
     public void setSexo(String sexo) { this.sexo = sexo; }
 
     public int getIdade() { return idade; }
-    public void setIdade(int idade) { this.idade = idade; }
+    public void setIdade(String idade) { this.idade = idade; }
 
     public String getDescricao() { return descricao; }
     public void setDescricao(String descricao) { this.descricao = descricao; }

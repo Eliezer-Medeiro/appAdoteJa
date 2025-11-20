@@ -79,4 +79,17 @@ public class AnimalService {
     public List<Animal> listarPorDono(Long donoId) {
         return animalRepository.findByDonoId(donoId);
     }
+
+    public List<Animal> filtrar(String especie, String sexo, String porte) {
+        // Se não tiver nenhum filtro, retorna tudo
+        if ((especie == null || especie.isEmpty()) &&
+            (sexo == null || sexo.isEmpty()) &&
+            (porte == null || porte.isEmpty())) {
+    
+            return animalRepository.findAll();
+        }
+    
+        return animalRepository.filtrar(especie, sexo, porte);
+    }
+
 }

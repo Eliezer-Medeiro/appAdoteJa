@@ -92,4 +92,8 @@ public class AnimalService {
         return animalRepository.filtrar(especie, sexo, porte);
     }
 
+    public Animal salvarEdicao(Animal animal) {
+        return animalRepository.save(animal);
+    }
+
 }

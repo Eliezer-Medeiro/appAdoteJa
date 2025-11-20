@@ -18,82 +18,25 @@ import br.appAdoteJa.appAdoteJa.repository.FotoRepository;
 @Service
 public class AnimalService {
 
-    private final AnimalRepository animalRepository;
-    private final FotoRepository fotoRepository;
-    private final Cloudinary cloudinary;
+    @Autowired
+    private AnimalRepository animalRepository;
 
-    public AnimalService(AnimalRepository animalRepository,
-                         FotoRepository fotoRepository,
-                         Cloudinary cloudinary) {
+    public void adicionarFotos(Long animalId, List<String> novasFotos) {
 
-        this.animalRepository = animalRepository;
-        this.fotoRepository = fotoRepository;
-        this.cloudinary = cloudinary;
-    }
+        // Carrega o animal com suas fotos atuais
+        Animal animal = animalRepository.findByIdWithFotos(animalId)
+            .orElseThrow(() -> new RuntimeException("Animal não encontrado"));
 
-    public Animal salvarAnimalComFotos(Animal animal, List<MultipartFile> fotosUpload) throws IOException {
-
-        // 1. Salva o animal primeiro (gera ID)
-        Animal animalSalvo = animalRepository.save(animal);
-
-        // 2. Upload das fotos no Cloudinary
-        if (fotosUpload != null) {
-            for (MultipartFile file : fotosUpload) {
-
-                if (file.isEmpty()) continue;
-
-                // Upload
-                Map uploadResult = cloudinary.uploader().upload(
-                    file.getBytes(),
-                    ObjectUtils.asMap(
-                        "folder", "adoteja/" + animalSalvo.getId(),   // pasta organizada
-                        "resource_type", "image"
-                    )
-                );
-
-                // Pega a URL final da imagem
-                String url = uploadResult.get("secure_url").toString();
-
-                // 3. Cria objeto Foto
-                Foto foto = new Foto();
-                foto.setUrl(url);
-                foto.setAnimal(animalSalvo);
-
-                // 4. Salva no banco
-                fotoRepository.save(foto);
-
-                // 5. Adiciona na lista do animal
-                animalSalvo.getFotos().add(foto);
-            }
+        // Se ainda não tiver lista, cria uma
+        if (animal.getFotos() == null) {
+            animal.setFotos(new ArrayList<>());
         }
 
-        return animalSalvo;
-    }
+        // Adiciona as novas fotos na lista atual
+        animal.getFotos().addAll(novasFotos);
 
-    // Buscar animal já com as fotos
-    public Animal buscarPorId(Long id) {
-        return animalRepository.findByIdWithFotos(id).orElse(null);
+        // Salva tudo no banco
+        animalRepository.save(animal);
     }
-
-    // Listar animais do usuário
-    public List<Animal> listarPorDono(Long donoId) {
-        return animalRepository.findByDonoId(donoId);
-    }
-
-    public List<Animal> filtrar(String especie, String sexo, String porte) {
-        // Se não tiver nenhum filtro, retorna tudo
-        if ((especie == null || especie.isEmpty()) &&
-            (sexo == null || sexo.isEmpty()) &&
-            (porte == null || porte.isEmpty())) {
-    
-            return animalRepository.findAll();
-        }
-    
-        return animalRepository.filtrar(especie, sexo, porte);
-    }
-
-    public Animal salvarEdicao(Animal animal) {
-        return animalRepository.save(animal);
-    }
-
 }
+

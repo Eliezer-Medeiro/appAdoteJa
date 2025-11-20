@@ -33,6 +33,9 @@ public class LoginController {
 	
     @Autowired
     private AnimalRepository animalRepository;
+
+	@Autowired
+    private AnimalService animalService;
     
 	@GetMapping("/login")
 	public String login(Model model) {
@@ -42,6 +45,27 @@ public class LoginController {
         }
 		return "login";
 	}
+
+	@GetMapping("/")
+    public String dashboard( // Ou o nome que estiver usando para a Home
+            @RequestParam(required = false) String especie,
+            @RequestParam(required = false) String sexo,
+            @RequestParam(required = false) String porte,
+            Model model,
+            HttpServletRequest request
+    ) throws UnsupportedEncodingException {
+
+        String usuarioIdStr = cookieService.getCookie(request, "usuarioId");
+        Long donoId = (usuarioIdStr != null) ? Long.parseLong(usuarioIdStr) : null;
+        
+        String nomeUsuario = cookieService.getCookie(request, "nomeUsuario");
+        model.addAttribute("nome", nomeUsuario != null ? nomeUsuario : "Visitante");
+
+        // Chama o filtro, agora no LoginController, usando o AnimalService
+        model.addAttribute("animais", animalService.filtrar(especie, sexo, porte, donoId));
+
+        return "home";
+    }
 	
 	@GetMapping("/")
 	public String dashboard(Model model, HttpServletRequest request) throws UnsupportedEncodingException {

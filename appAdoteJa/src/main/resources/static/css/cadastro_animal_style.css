@@ -6,88 +6,146 @@
     font-family: "Arial", sans-serif;
 }
 
-/* ===== TOP NAVBAR ===== */
-.navbar-top {
-    width: 100%;
-    background-color: #2e7d32; /* verde ONG */
-    padding: 12px 18px;
+body {
+    background: #f1f8f4;
+    color: #2e332f;
+}
+
+/* ===== HEADER ===== */
+.container header {
     display: flex;
     justify-content: space-between;
+    align-items: center;
+    padding: 22px 0;
 }
 
-.navbar-top .nav-link {
+.container header h1 {
+    color: #2e7d32;
+    font-size: 28px;
+}
+
+/* ===== BOTÃO VOLTAR ===== */
+.btn-cancel {
+    padding: 10px 16px;
+    background: #d32f2f;
     color: #fff;
     text-decoration: none;
+    border-radius: 8px;
     font-weight: 600;
-    transition: 0.3s;
+    transition: .25s;
 }
 
-.navbar-top .nav-link:hover {
-    opacity: .8;
+.btn-cancel:hover {
+    background: #b71c1c;
 }
 
-/* ===== CONTAINER DO FORMULÁRIO ===== */
-.form-container {
-    max-width: 550px;
-    background: #e8f5e9; /* verde claro suave */
-    margin: 40px auto;
-    padding: 25px;
-    border-radius: 14px;
-    box-shadow: 0 0 12px rgba(0,0,0,0.15);
-    animation: fadeIn 0.35s ease-in-out;
-}
-
-.form-container h2 {
-    color: #2e7d32;
-    margin-bottom: 18px;
-    text-align: center;
-}
-
-/* ===== CAMPOS ===== */
-form label {
+/* ===== ALERTAS ===== */
+.alert-success,
+.alert-danger {
+    padding: 14px 18px;
+    border-radius: 10px;
+    margin-bottom: 20px;
     font-weight: 600;
-    margin-top: 10px;
-    display: block;
+    animation: fadeIn .35s ease-in-out;
+}
+
+.alert-success {
+    background: #c8e6c9;
     color: #1b5e20;
 }
 
-form input,
-form select,
-form textarea {
+.alert-danger {
+    background: #ffcdd2;
+    color: #b71c1c;
+}
+
+/* ===== FORM ===== */
+.form-cadastro {
+    background: #e8f5e9;
+    padding: 26px;
+    border-radius: 16px;
+    box-shadow: 0 0 10px rgba(0,0,0,.12);
+    animation: fadeIn .35s ease-in-out;
+}
+
+fieldset {
+    border: 2px solid #a5d6a7;
+    padding: 18px;
+    margin-bottom: 25px;
+    border-radius: 12px;
+    background: #ffffffd6;
+}
+
+legend {
+    padding: 0 12px;
+    font-weight: bold;
+    color: #2e7d32;
+    font-size: 18px;
+}
+
+/* ===== CAMPOS ===== */
+.form-group {
+    margin-bottom: 16px;
+}
+
+.form-group.full-width {
     width: 100%;
-    padding: 11px;
+}
+
+label {
+    font-weight: 600;
+    color: #1b5e20;
+}
+
+input,
+select,
+textarea {
+    width: 100%;
     margin-top: 6px;
-    border-radius: 10px;
-    border: 1px solid #a5d6a7;
-    background: #ffffff;
-    font-size: 15px;
-    transition: .2s;
-}
-
-form input:focus,
-form select:focus,
-form textarea:focus {
-    border-color: #4caf50;
-    outline: none;
-    box-shadow: 0 0 5px rgba(76, 175, 80, .5);
-}
-
-/* ===== BOTÃO ===== */
-.btn-save {
-    width: 100%;
-    background: #43a047;
     padding: 12px;
     border-radius: 10px;
-    border: none;
-    font-size: 17px;
-    font-weight: 600;
-    color: #fff;
-    margin-top: 18px;
-    cursor: pointer;
-    transition: .3s ease;
+    border: 1px solid #a5d6a7;
+    background: #fff;
+    font-size: 15px;
+    transition: .25s;
 }
 
-.btn-save:hover {
+textarea {
+    min-height: 120px;
+    resize: vertical;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+    border-color: #4caf50;
+    box-shadow: 0 0 5px rgba(76, 175, 80, .5);
+    outline: none;
+}
+
+/* ERRO DE CAMPO */
+.error-message {
+    color: #d32f2f;
+    font-size: 14px;
+    margin-top: 4px;
+    display: block;
+}
+
+/* ===== BOTÕES ===== */
+.btn-submit {
+    width: 100%;
+    padding: 14px;
+    font-size: 18px;
+    font-weight: 600;
+    color: #fff;
+    background: #43a047;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: .3s;
+}
+
+.btn-submit:hover {
     background: #2e7d32;
     transform: scale(1.02);
 }
@@ -100,14 +158,19 @@ form textarea:focus {
 
 /* ===== RESPONSIVIDADE ===== */
 @media (max-width: 480px) {
-    .form-container {
-        max-width: 90%;
+    .container header {
+        flex-direction: column;
+        gap: 10px;
+        text-align: center;
+    }
+
+    .form-cadastro {
         padding: 18px;
     }
 
-    form input,
-    form textarea,
-    form select {
+    input,
+    select,
+    textarea {
         font-size: 14px;
     }
 }

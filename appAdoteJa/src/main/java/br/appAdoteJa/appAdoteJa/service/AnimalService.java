@@ -1,19 +1,14 @@
 package br.appAdoteJa.appAdoteJa.service;
 
-import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
-
-import com.cloudinary.Cloudinary;
-import com.cloudinary.utils.ObjectUtils;
 
 import br.appAdoteJa.appAdoteJa.model.Animal;
 import br.appAdoteJa.appAdoteJa.model.Foto;
 import br.appAdoteJa.appAdoteJa.repository.AnimalRepository;
-import br.appAdoteJa.appAdoteJa.repository.FotoRepository;
 
 @Service
 public class AnimalService {
@@ -21,22 +16,89 @@ public class AnimalService {
     @Autowired
     private AnimalRepository animalRepository;
 
-    public void adicionarFotos(Long animalId, List<String> novasFotos) {
+    // ============================
+    // SALVAR
+    // ============================
+    public Animal salvar(Animal animal) {
+        return animalRepository.save(animal);
+    }
 
-        // Carrega o animal com suas fotos atuais
-        Animal animal = animalRepository.findByIdWithFotos(animalId)
-            .orElseThrow(() -> new RuntimeException("Animal não encontrado"));
+    // salvar edição
+    public Animal salvarEdicao(Animal animal) {
+        return animalRepository.save(animal);
+    }
 
-        // Se ainda não tiver lista, cria uma
+    // ============================
+    // BUSCAR POR ID
+    // ============================
+    public Animal buscarPorId(Long id) {
+        return animalRepository.findByIdWithFotos(id)
+                .orElseThrow(() -> new RuntimeException("Animal não encontrado: " + id));
+    }
+
+    // ============================
+    // LISTAR POR DONO
+    // ============================
+    public List<Animal> listarPorDono(Long donoId) {
+        return animalRepository.findByDonoId(donoId);
+    }
+
+    // ============================
+    // FILTRAR
+    // ============================
+    public List<Animal> filtrar(String especie, String sexo, String porte) {
+        return animalRepository.filtrar(especie, sexo, porte);
+    }
+
+    // ============================
+    // SALVAR ANIMAL COM MULTIPLAS FOTOS
+    // ============================
+    public void salvarAnimalComFotos(Animal animal, List<String> urlsFotos) {
+
+        List<Foto> fotos = new ArrayList<>();
+
+        for (String url : urlsFotos) {
+            Foto foto = new Foto(url);
+            foto.setAnimal(animal);
+            fotos.add(foto);
+        }
+
+        animal.setFotos(fotos);
+
+        animalRepository.save(animal);
+    }
+
+    // ============================
+    // ADICIONAR FOTOS A UM ANIMAL EXISTENTE
+    // ============================
+    public void adicionarFotos(Long animalId, List<String> novasUrls) {
+
+        Animal animal = buscarPorId(animalId);
+
         if (animal.getFotos() == null) {
             animal.setFotos(new ArrayList<>());
         }
 
-        // Adiciona as novas fotos na lista atual
-        animal.getFotos().addAll(novasFotos);
+        for (String url : novasUrls) {
+            Foto foto = new Foto(url);
+            foto.setAnimal(animal);
+            animal.getFotos().add(foto);
+        }
 
-        // Salva tudo no banco
         animalRepository.save(animal);
     }
-}
 
+    // ============================
+    // LISTAR POR STATUS (ex: disponíveis)
+    // ============================
+    public List<Animal> listarPorStatus(String status) {
+        return animalRepository.findByStatus(status);
+    }
+
+    // ============================
+    // HOME: status + não mostrar do dono
+    // ============================
+    public List<Animal> listarPorStatusExcluindoDono(String status, Long donoId) {
+        return animalRepository.findByStatusAndDonoIdNot(status, donoId);
+    }
+}

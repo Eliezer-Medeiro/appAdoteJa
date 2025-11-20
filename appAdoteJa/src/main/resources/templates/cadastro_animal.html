@@ -65,10 +65,15 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="idade">Idade (em anos):</label>
-                    <input type="number" id="idade" th:field="*{idade}" min="0" required>
-                    <span th:if="${#fields.hasErrors('idade')}" th:errors="*{idade}" class="error-message"></span>
-                </div>
+				    <label for="idade">Faixa Etária:</label>
+				    <select id="idade" th:field="*{idade}" required>
+				        <option value="">Selecione</option>
+				        <option value="filhote">Filhote</option>
+				        <option value="adulto">Adulto</option>
+				        <option value="idoso">Idoso</option>
+				    </select>
+				    <span th:if="${#fields.hasErrors('idade')}" th:errors="*{idade}" class="error-message"></span>
+				</div>
 
                 <div class="form-group full-width">
                     <label for="descricao">Descrição e Histórico:</label>

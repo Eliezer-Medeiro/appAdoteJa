@@ -24,16 +24,23 @@ public interface AnimalRepository extends JpaRepository<Animal, Long> {
 
 	@Query("""
     SELECT a FROM Animal a
-    WHERE a.status = 'Disponível'               
-      AND (:donoId IS NULL OR a.dono.id <> :donoId)                
+    WHERE a.status = 'Disponível'                                    
+      AND (:donoId IS NULL OR a.dono.id <> :donoId)                 
       AND (:especie IS NULL OR :especie = '' OR a.especie = :especie)
       AND (:sexo IS NULL OR :sexo = '' OR a.sexo = :sexo)
       AND (:porte IS NULL OR :porte = '' OR a.porte = :porte)
+      
+
+      AND (:idade IS NULL OR :idade = '' OR 
+           (:idade = 'filhote' AND a.idade <= 1) OR
+           (:idade = 'adulto' AND a.idade > 1 AND a.idade <= 8) OR
+           (:idade = 'idoso' AND a.idade > 8))
     """)
     List<Animal> filtrar(
         @Param("especie") String especie,
         @Param("sexo") String sexo,
         @Param("porte") String porte,
-        @Param("donoId") Long donoId 
+        @Param("donoId") Long donoId,
+        @Param("idade") String idade 
     );
 }

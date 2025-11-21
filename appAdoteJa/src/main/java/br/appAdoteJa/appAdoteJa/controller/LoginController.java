@@ -10,7 +10,7 @@ import br.appAdoteJa.appAdoteJa.repository.AnimalRepository;
 import br.appAdoteJa.appAdoteJa.repository.UsuarioRepository;
 import br.appAdoteJa.appAdoteJa.service.CookieService;
 import br.appAdoteJa.appAdoteJa.service.AnimalService;
-import org.springframework.web.bind.annotation.RequestParam; // ⚠️ IMPORT CORRIGIDO
+import org.springframework.web.bind.annotation.RequestParam; 
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -54,7 +54,7 @@ public class LoginController {
 	public String dashboard(
             @RequestParam(required = false) String especie,
             @RequestParam(required = false) String sexo,
-            @RequestParam(required = false) String idade, // Filtro de idade adicionado
+            @RequestParam(required = false) String idade,
             Model model, 
             HttpServletRequest request
     ) throws UnsupportedEncodingException {
@@ -77,8 +77,7 @@ public class LoginController {
         String nomeUsuario = cookieService.getCookie(request, "nomeUsuario");
 	    model.addAttribute("nome", nomeUsuario != null ? nomeUsuario : "Visitante");
 	    
-	    // 3. FILTRO: Usa o serviço de filtro unificado (5 parâmetros)
-	    List<Animal> animais = animalService.filtrar(especie, sexo, porte, idUsuarioLogado, idade);
+	    List<Animal> animais = animalService.filtrar(especie, sexo, idUsuarioLogado, idade);
 	    
 	    model.addAttribute("animais", animais);
 	    return "home";
@@ -118,7 +117,6 @@ public class LoginController {
 	@PostMapping("/cadastro")
 	public String cadastroUsuario(@Valid Usuario usuario, BindingResult result, Model model, RedirectAttributes attributes) {
 
-        // --- INÍCIO DA VERIFICAÇÃO ---
         Optional<Usuario> usuarioExistente = ur.findByEmail(usuario.getEmail());
         
         if (usuarioExistente.isPresent()) {
@@ -126,7 +124,6 @@ public class LoginController {
             model.addAttribute("erro_email", "Este e-mail já está em uso.");
             return "cadastro";
         }
-        // --- FIM DA VERIFICAÇÃO ---
 
 		if(result.hasErrors()) {
             model.addAttribute("usuario", usuario);

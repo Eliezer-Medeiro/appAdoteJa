@@ -28,7 +28,6 @@ public interface AnimalRepository extends JpaRepository<Animal, Long> {
       AND (:donoId IS NULL OR a.dono.id <> :donoId)                 
       AND (:especie IS NULL OR :especie = '' OR a.especie = :especie)
       AND (:sexo IS NULL OR :sexo = '' OR a.sexo = :sexo)
-      AND (:porte IS NULL OR :porte = '' OR a.porte = :porte)
       
 
       AND (:idade IS NULL OR 
@@ -39,7 +38,6 @@ public interface AnimalRepository extends JpaRepository<Animal, Long> {
     List<Animal> filtrar(
         @Param("especie") String especie,
         @Param("sexo") String sexo,
-        @Param("porte") String porte,
         @Param("donoId") Long donoId,
         @Param("idade") String idade 
     );

@@ -95,37 +95,73 @@ body {
 /* ------------------------- */
 /* SIDEBAR DE FILTROS        */
 /* ------------------------- */
-.sidebar-filtros {
-    background: white;
-    width: 270px;
-    padding: 20px;
-    border-radius: var(--radius);
-    box-shadow: 0 2px 8px rgba(0,0,0,0.10);
-    height: fit-content;
+
+
+/* Estilos para o container lateral de filtros */
+#filtroLateral {
+    width: 250px; 
+    padding: 25px 20px; /* Mais padding vertical */
+    background-color: #e8f5e9; /* Fundo verde muito claro e suave */
+    border-radius: 12px; /* Cantos bem arredondados */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1); /* Sombra mais destacada */
+    border: 1px solid #c8e6c9; /* Borda verde clara */
+    font-family: Arial, sans-serif; /* Fonte legível */
 }
 
-.sidebar-filtros h2 {
-    color: var(--cor-verde-escuro);
-    margin-bottom: 15px;
-}
-
+/* Estilos para cada grupo de filtro */
 .filtro {
-    margin-bottom: 15px;
-    display: flex;
-    flex-direction: column;
+    margin-bottom: 25px; /* Mais espaço entre os filtros */
 }
 
+/* Estilos para os rótulos */
 .filtro label {
-    font-size: 14px;
-    margin-bottom: 6px;
-    font-weight: 500;
+    display: block; 
+    font-weight: 700; /* Mais negrito */
+    margin-bottom: 10px;
+    color: #388e3c; /* Verde escuro (Cor institucional ONG) */
+    font-size: 1em;
+    text-transform: uppercase; /* Deixa o rótulo em maiúsculas para destaque */
+    letter-spacing: 0.5px;
 }
 
-.filtro input,
+/* Estilos para o campo de seleção (dropdown) */
 .filtro select {
-    padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: var(--radius);
+    width: 100%; 
+    padding: 12px;
+    border: 1px solid #a5d6a7; /* Borda levemente verde */
+    border-radius: 6px;
+    background-color: white;
+    font-size: 1em;
+    cursor: pointer;
+    box-sizing: border-box; 
+    transition: border-color 0.3s ease;
+}
+
+.filtro select:focus {
+    border-color: #4CAF50; /* Verde vibrante ao focar */
+    box-shadow: 0 0 0 0.2rem rgba(76, 175, 80, 0.25); /* Sombra suave verde */
+    outline: none;
+}
+
+/* Estilos para o botão de submissão (Destaque principal) */
+#filtroLateral button[type="submit"] {
+    width: 100%;
+    padding: 12px;
+    background-color: #4CAF50; /* Verde Primário (Material Design Green) */
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 1em;
+    font-weight: bold;
+    margin-top: 15px;
+    transition: background-color 0.3s ease, transform 0.1s;
+    text-transform: uppercase;
+}
+
+#filtroLateral button[type="submit"]:hover {
+    background-color: #388e3c; /* Escurece para um verde mais forte no hover */
+    transform: translateY(-1px); /* Efeito sutil de levantar */
 }
 
 /* ------------------------- */

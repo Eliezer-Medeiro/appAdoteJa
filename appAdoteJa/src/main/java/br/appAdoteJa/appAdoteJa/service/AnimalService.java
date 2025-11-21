@@ -116,7 +116,8 @@ public class AnimalService {
         return animalRepository.findByStatusAndDonoIdNot(status, donoId);
     }
 
-    public void mudarStatus(Long id, String novoStatus) {
+    public void mudarStatus(Long id, String novoStatus) {Animal animal = animalRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Animal não encontrado: " + id));
         animal.setStatus(novoStatus);
         animalRepository.save(animal);
     }

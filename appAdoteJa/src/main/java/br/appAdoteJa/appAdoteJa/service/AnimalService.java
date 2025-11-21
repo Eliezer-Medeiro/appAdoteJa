@@ -115,4 +115,9 @@ public class AnimalService {
     public List<Animal> listarPorStatusExcluindoDono(String status, Long donoId) {
         return animalRepository.findByStatusAndDonoIdNot(status, donoId);
     }
+
+    public void mudarStatus(Long id, String novoStatus) {
+        animal.setStatus(novoStatus);
+        animalRepository.save(animal);
+    }
 }

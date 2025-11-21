@@ -54,7 +54,6 @@ public class LoginController {
 	public String dashboard(
             @RequestParam(required = false) String especie,
             @RequestParam(required = false) String sexo,
-            @RequestParam(required = false) String porte,
             @RequestParam(required = false) String idade, // Filtro de idade adicionado
             Model model, 
             HttpServletRequest request

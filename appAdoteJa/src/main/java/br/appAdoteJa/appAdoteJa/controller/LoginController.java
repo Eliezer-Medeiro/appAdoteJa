@@ -47,20 +47,17 @@ public class LoginController {
 		return "login";
 	}
 	
-    // ============================
-    // DASHBOARD (HOME) - MÉTODO ÚNICO E COMPLETO COM 4 FILTROS
-    // ============================
+
 	@GetMapping("/")
 	public String dashboard(
-            @RequestParam(required = false) String especie,
-            @RequestParam(required = false) String sexo,
-            @RequestParam(required = false) String idade,
-            Model model, 
-            HttpServletRequest request
-    ) throws UnsupportedEncodingException {
+	    @RequestParam(required = false) String especie,
+	    @RequestParam(required = false) String sexo,
+	    @RequestParam(required = false) String idade,
+	    Model model, 
+	    HttpServletRequest request
+	) throws UnsupportedEncodingException {
 	    
 	    String idUsuarioString = cookieService.getCookie(request, "usuarioId"); 
-	    
 	    Long idUsuarioLogado = 0L;
 	    
 	    // 1. VERIFICAÇÃO DE LOGIN E EXTRAÇÃO DO ID
@@ -72,9 +69,9 @@ public class LoginController {
 	            idUsuarioLogado = 0L;
 	        }
 	    }
-        
-        // 2. BUSCA O NOME (APENAS PARA EXIBIÇÃO)
-        String nomeUsuario = cookieService.getCookie(request, "nomeUsuario");
+	    
+	    // 2. BUSCA O NOME (APENAS PARA EXIBIÇÃO)
+	    String nomeUsuario = cookieService.getCookie(request, "nomeUsuario");
 	    model.addAttribute("nome", nomeUsuario != null ? nomeUsuario : "Visitante");
 	    
 	    List<Animal> animais = animalService.filtrar(especie, sexo, idUsuarioLogado, idade);

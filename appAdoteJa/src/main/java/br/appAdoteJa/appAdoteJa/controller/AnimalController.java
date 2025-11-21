@@ -123,6 +123,35 @@ public class AnimalController {
 
 
     // ============================
+    // MARCAR COMO ADOTADO
+    // ============================
+    @PostMapping("/marcar-adotado/{id}")
+    public String marcarAdotado(@PathVariable Long id, RedirectAttributes ra) {
+        try {
+            animalService.mudarStatus(id, "Adotado");
+            ra.addFlashAttribute("sucesso", "Status alterado: Animal marcado como Adotado!");
+        } catch (RuntimeException e) {
+            ra.addFlashAttribute("erro", e.getMessage());
+        }
+        return "redirect:/animais/meus-animais"; 
+    }
+
+    // ============================
+    // MARCAR COMO DISPONÍVEL
+    // ============================
+    @PostMapping("/marcar-disponivel/{id}")
+    public String marcarDisponivel(@PathVariable Long id, RedirectAttributes ra) {
+        try {
+            animalService.mudarStatus(id, "Disponível");
+            ra.addFlashAttribute("sucesso", "Status alterado: Animal voltando ao catálogo!");
+        } catch (RuntimeException e) {
+            ra.addFlashAttribute("erro", e.getMessage());
+        }
+        return "redirect:/animais/meus-animais"; 
+    }
+    
+
+    // ============================
     // EDITAR ANIMAL
     // ============================
     @GetMapping("/editar/{id}")

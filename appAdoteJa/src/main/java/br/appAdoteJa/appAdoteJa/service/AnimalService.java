@@ -51,16 +51,14 @@ public class AnimalService {
         return animalRepository.filtrar(especie, sexo, donoId, idade);
     }
 
-    // ============================
-    // SALVAR ANIMAL COM FOTOS
-    // ============================
-    // Conteúdo CORRIGIDO para AnimalService.java
     public void salvarAnimalComFotos(Animal animal, List<MultipartFile> arquivosFotos) {
-    
-        if (animal.getFotos() == null) {
-            animal.setFotos(new ArrayList<>());
+
+        Animal animalSalvo = animalRepository.save(animal);
+
+        if (animalSalvo.getFotos() == null) {
+            animalSalvo.setFotos(new ArrayList<>());
         }
-        
+
         for (MultipartFile arquivo : arquivosFotos) {
             if (!arquivo.isEmpty()) {
                 try {
@@ -70,29 +68,24 @@ public class AnimalService {
                             "folder", "adoteja_animais"
                         )
                     );
-    
+
                     String cloudinaryUrl = (String) uploadResult.get("secure_url");
-    
+
                     Foto foto = new Foto(cloudinaryUrl);
                     
-                    animal.adicionarFoto(foto); 
-    
+                    animalSalvo.adicionarFoto(foto); 
+
                 } catch (IOException e) {
-                    System.err.println("Erro de I/O ao processar arquivo: " + e.getMessage());
-                    e.printStackTrace();
+                    throw new RuntimeException("Erro ao processar arquivo: " + e.getMessage(), e);
                 } catch (Exception e) {
-                    System.err.println("Erro ao enviar para o Cloudinary: " + e.getMessage());
-                    e.printStackTrace();
+                    throw new RuntimeException("Falha no upload do Cloudinary: " + e.getMessage(), e);
                 }
             }
         }
         
-        animalRepository.save(animal);
+        animalRepository.save(animalSalvo); 
     }
 
-    // ============================
-    // ADICIONAR FOTOS
-    // ============================
     public void adicionarFotos(Long animalId, List<MultipartFile> arquivosFotos) {
 
         Animal animal = buscarPorId(animalId);
@@ -114,13 +107,11 @@ public class AnimalService {
                     String cloudinaryUrl = (String) uploadResult.get("secure_url");
 
                     Foto foto = new Foto(cloudinaryUrl);
-                    foto.setAnimal(animal);
-
-                    animal.getFotos().add(foto);
+                    
+                    animal.adicionarFoto(foto); 
 
                 } catch (IOException | RuntimeException e) {
-                    System.err.println("Erro ao adicionar fotos com Cloudinary: " + e.getMessage());
-                    e.printStackTrace();
+                    throw new RuntimeException("Erro ao adicionar fotos: " + e.getMessage(), e);
                 }
             }
         }

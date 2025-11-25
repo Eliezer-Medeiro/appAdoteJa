@@ -54,12 +54,13 @@ public class AnimalService {
     // ============================
     // SALVAR ANIMAL COM FOTOS
     // ============================
+    // Conteúdo CORRIGIDO para AnimalService.java
     public void salvarAnimalComFotos(Animal animal, List<MultipartFile> arquivosFotos) {
-
-        Animal animalSalvo = animalRepository.save(animal);
-
-        List<Foto> fotos = new ArrayList<>();
-
+    
+        if (animal.getFotos() == null) {
+            animal.setFotos(new ArrayList<>());
+        }
+        
         for (MultipartFile arquivo : arquivosFotos) {
             if (!arquivo.isEmpty()) {
                 try {
@@ -69,13 +70,13 @@ public class AnimalService {
                             "folder", "adoteja_animais"
                         )
                     );
-
+    
                     String cloudinaryUrl = (String) uploadResult.get("secure_url");
-
+    
                     Foto foto = new Foto(cloudinaryUrl);
-                    foto.setAnimal(animalSalvo);
-
-                    fotos.add(foto);
+                    
+                    animal.adicionarFoto(foto); 
+    
                 } catch (IOException e) {
                     System.err.println("Erro de I/O ao processar arquivo: " + e.getMessage());
                     e.printStackTrace();
@@ -85,9 +86,8 @@ public class AnimalService {
                 }
             }
         }
-
-        animalSalvo.setFotos(fotos);
-        animalRepository.save(animalSalvo);
+        
+        animalRepository.save(animal);
     }
 
     // ============================
